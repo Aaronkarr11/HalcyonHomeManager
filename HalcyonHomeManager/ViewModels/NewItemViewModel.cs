@@ -1,0 +1,67 @@
+﻿using HalcyonHomeManager.Models;
+using Newtonsoft.Json;
+
+namespace HalcyonHomeManager.ViewModels
+{
+    public class NewItemViewModel : BaseViewModel
+    {
+        public NewItemViewModel()
+        {
+            RequestedDate = DateTime.Now;
+            SaveCommand = new Command(OnSave, ValidateSave);
+            CancelCommand = new Command(OnCancel);
+            this.PropertyChanged +=
+                (_, __) => SaveCommand.ChangeCanExecute();
+        }
+
+        private bool ValidateSave()
+        {
+            return !String.IsNullOrWhiteSpace(_name);
+        }
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
+
+        private DateTime _description;
+        public DateTime RequestedDate
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
+        public Command SaveCommand { get; }
+        public Command CancelCommand { get; }
+
+        private async void OnCancel()
+        {
+            // This will pop the current page off the navigation stack
+            await Shell.Current.GoToAsync("..");
+        }
+
+        private async void OnSave()
+        {
+            try
+            {
+                RequestItemsModel requestItemRequest = new RequestItemsModel();
+                requestItemRequest.DesiredDate = RequestedDate;
+                requestItemRequest.Title = Name;
+                requestItemRequest.IsFulfilled = 0;
+                requestItemRequest.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
+
+                //await _transactionServices.CreateRequestItem(requestItemRequest);
+
+                // This will pop the current page off the navigation stack
+                await Shell.Current.GoToAsync("..");
+            }
+            catch (Exception ex)
+            {
+                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "NewItemViewModel", "OnSave");
+                App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
+            }
+        }
+    }
+}

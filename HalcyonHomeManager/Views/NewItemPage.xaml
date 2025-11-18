@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HalcyonHomeManager.Views.NewItemPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="New Request Item"
+             xmlns:viewmodels="clr-namespace:HalcyonHomeManager.ViewModels" 
+             x:DataType="viewmodels:NewItemViewModel">
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <Label Text="Name" FontSize="Medium" />
+            <Entry Text="{Binding Name, Mode=TwoWay}" MaxLength="50" FontSize="Medium" />
+            <Label Text="Request Date" FontSize="Medium" />
+            <DatePicker Date="{Binding RequestedDate, Mode=TwoWay}" FontSize="Medium" Margin="0"  />
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Margin="0,0,10,0" BackgroundColor="Goldenrod" TextColor="White" FontAttributes="Bold" FontSize="Medium"    Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" Margin="0,0,10,0" BackgroundColor="#006600" TextColor="White" FontAttributes="Bold" FontSize="Medium"  Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>

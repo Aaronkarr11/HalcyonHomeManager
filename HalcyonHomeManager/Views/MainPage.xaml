@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HalcyonHomeManager.ViewModels"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             x:Class="HalcyonHomeManager.Views.MainPage"
+             x:DataType="vm:HomeViewModel"
+             Title="{Binding Title}"
+             BackgroundImageSource="sky.jpg">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help" Clicked="HelpButton_Clicked"/>
+        <ToolbarItem Text="About" Clicked="AboutButton_Clicked"/>
+    </ContentPage.ToolbarItems>
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackLayout BackgroundColor="White" Margin="0,10,0,0" Grid.Row="0">
+            <Label FontSize="Medium" TextColor="Blue" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="Work Task Dashboard"  BackgroundColor="White" ></Label>
+        </StackLayout>
+        <StackLayout  BackgroundColor="White" Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+            <Label FontSize="Medium"  FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding BarGraphTitle}"  BackgroundColor="White"></Label>
+            <lvc:CartesianChart VerticalOptions="FillAndExpand"  HorizontalOptions="FillAndExpand" Series="{Binding BarSeries}"
+                  LegendPosition="Bottom"
+                  XAxes="{Binding BarXAxes}"
+                  YAxes="{Binding BarYAxes}">
+            </lvc:CartesianChart>
+        </StackLayout>
+
+
+
+        <StackLayout BackgroundColor="White" Grid.Row="2">
+            <Label FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding PieGraphTitle}"  BackgroundColor="White"></Label>
+            <lvc:PieChart  VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Series="{Binding Series}" 
+                      LegendPosition="Right"
+                      TooltipPosition="Right"
+                      />
+        </StackLayout>
+        <StackLayout BackgroundColor="White" Grid.Row="3">
+            <Label FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding LineGraphTitle}"  BackgroundColor="White"></Label>
+            <lvc:CartesianChart VerticalOptions="FillAndExpand" HorizontalOptions="Fill" 
+                                Series="{Binding SeriesCollection}"
+                                XAxes="{Binding XAxes}"
+                                YAxes="{Binding YAxes}"/>
+        </StackLayout>
+
+
+
+
+
+    </Grid>
+
+</ContentPage>
