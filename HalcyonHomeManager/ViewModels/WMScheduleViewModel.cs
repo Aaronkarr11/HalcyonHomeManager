@@ -1,4 +1,4 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
 
 namespace HalcyonHomeManager.ViewModels
 {
@@ -33,7 +33,7 @@ namespace HalcyonHomeManager.ViewModels
         //    }
         //    catch (Exception ex)
         //    {
-        //        ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "ItemRequestViewModel", "OnItemChecked");
+        //        ErrorLog error = Helpers.ReturnErrorMessage(ex, "ItemRequestViewModel", "OnItemChecked");
         //        App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
         //    }
         //}
@@ -47,8 +47,8 @@ namespace HalcyonHomeManager.ViewModels
         }
 
 
-        private List<RequestItemsModel> _requestItems;
-        public List<RequestItemsModel> RequestItems
+        private List<RequestItems> _requestItems;
+        public List<RequestItems> RequestItems
         {
             get => _requestItems;
             set => SetProperty(ref _requestItems, value);

@@ -1,4 +1,5 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Models;
 using HalcyonHomeManager.Views;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -40,8 +41,8 @@ namespace HalcyonHomeManager.ViewModels
         {
             try
             {
-                RequestItemsModel item = (RequestItemsModel)obj;
-                RequestItemsModel request = new RequestItemsModel();
+                RequestItems item = (RequestItems)obj;
+                RequestItems request = new RequestItems();
 
                 request.DesiredDate = item.DesiredDate;
                 request.IsFulfilled = 1;
@@ -51,7 +52,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "ItemRequestViewModel", "OnItemChecked");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "ItemRequestViewModel", "OnItemChecked");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -86,8 +87,8 @@ namespace HalcyonHomeManager.ViewModels
         }
 
 
-        private List<RequestItemsModel> _requestItems;
-        public List<RequestItemsModel> RequestItems
+        private List<RequestItems> _requestItems;
+        public List<RequestItems> RequestItems
         {
             get => _requestItems;
             set => SetProperty(ref _requestItems, value);

@@ -4,6 +4,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using Newtonsoft.Json;
 using SkiaSharp;
 using HalcyonHomeManager.Models;
+using HalcyonHomeManager.Entities;
 
 namespace HalcyonHomeManager.ViewModels
 {
@@ -147,7 +148,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "HomeViewModel", "OnAppearing");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "HomeViewModel", "OnAppearing");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }

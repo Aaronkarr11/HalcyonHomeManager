@@ -1,4 +1,5 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Models;
 using Newtonsoft.Json;
 
 
@@ -66,7 +67,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "ExecuteLoadItemsCommand");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "ExecuteLoadItemsCommand");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
             finally
@@ -90,7 +91,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "OnAppearing");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "OnAppearing");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -114,7 +115,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "ExecuteEditHouseHoldCommand");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "ExecuteEditHouseHoldCommand");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -133,7 +134,7 @@ namespace HalcyonHomeManager.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "OnDelete");
+                        ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "OnDelete");
                         App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                     }
                 }

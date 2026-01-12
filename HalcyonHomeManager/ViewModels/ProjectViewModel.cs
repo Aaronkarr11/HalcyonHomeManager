@@ -1,4 +1,4 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -6,7 +6,7 @@ namespace HalcyonHomeManager.ViewModels
     [QueryProperty(nameof(Project), nameof(Project))]
     public class ProjectViewModel : BaseViewModel
     {
-        private ProjectModel _project;
+        private Project _project;
 
         public ProjectViewModel(object project = null)
         {
@@ -41,7 +41,7 @@ namespace HalcyonHomeManager.ViewModels
         }
 
 
-        public ProjectModel Project
+        public Project Project
         {
             get
             {
@@ -54,7 +54,7 @@ namespace HalcyonHomeManager.ViewModels
             }
         }
 
-        public async void LoadItemId(ProjectModel project)
+        public async void LoadItemId(Project project)
         {
             try
             {
@@ -80,13 +80,13 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "LoadItemId");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "LoadItemId");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
 
-        private ProjectModel _selectedProject;
-        public ProjectModel SelectedProject
+        private Project _selectedProject;
+        public Project SelectedProject
         {
             get => _selectedProject;
             set => SetProperty(ref _selectedProject, value);
@@ -229,14 +229,14 @@ namespace HalcyonHomeManager.ViewModels
                     try
                     {
                         ProjectViewModel rawProjectViewModel = (ProjectViewModel)obj;
-                        ProjectModel project = rawProjectViewModel.SelectedProject;
+                        Project project = rawProjectViewModel.SelectedProject;
                         project.Completed = 0;
                         project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
                         await Shell.Current.GoToAsync("..");
                     }
                     catch (Exception ex)
                     {
-                        ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "LoadItemId");
+                        ErrorLog error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "LoadItemId");
                         App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                     }
                 }
@@ -254,14 +254,14 @@ namespace HalcyonHomeManager.ViewModels
                     try
                     {
                         ProjectViewModel rawProjectViewModel = (ProjectViewModel)obj;
-                        ProjectModel project = rawProjectViewModel.SelectedProject;
+                        Project project = rawProjectViewModel.SelectedProject;
                         project.Completed = 1;
                         project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
                         await Shell.Current.GoToAsync("..");
                     }
                     catch (Exception ex)
                     {
-                        ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "OnComplete");
+                        ErrorLog error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "OnComplete");
                         App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                     }
                 }
@@ -273,14 +273,14 @@ namespace HalcyonHomeManager.ViewModels
             try
             {
                 ProjectViewModel rawProjectViewModel = (ProjectViewModel)obj;
-                ProjectModel project = rawProjectViewModel.SelectedProject;
+                Project project = rawProjectViewModel.SelectedProject;
                 project.Completed = 0;
                 project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "OnComplete");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "OnComplete");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }

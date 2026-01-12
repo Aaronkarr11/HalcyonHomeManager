@@ -1,4 +1,4 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -46,7 +46,7 @@ namespace HalcyonHomeManager.ViewModels
         {
             try
             {
-                RequestItemsModel requestItemRequest = new RequestItemsModel();
+                RequestItems requestItemRequest = new RequestItems();
                 requestItemRequest.DesiredDate = RequestedDate;
                 requestItemRequest.Title = Name;
                 requestItemRequest.IsFulfilled = 0;
@@ -59,7 +59,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "NewItemViewModel", "OnSave");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "NewItemViewModel", "OnSave");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }

@@ -1,17 +1,16 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HalcyonHomeManager.Models
+namespace HalcyonHomeManager.Entities
 {
-    public class WorkTaskModel : HouseHoldMember
+    public class WorkTask : HouseHoldMember
     {
-        public string PartitionKey { get; set; }
-        public string RowKey { get; set; }
-        public string ParentPartitionKey { get; set; }
-        public string ParentRowKey { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }
         public string DeviceName { get; set; }
         public string Assignment { get; set; }
         public string State { get; set; }

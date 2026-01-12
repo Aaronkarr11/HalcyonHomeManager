@@ -1,4 +1,4 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -41,8 +41,8 @@ namespace HalcyonHomeManager.ViewModels
             BuildDropDownLists();
         }
 
-        private WorkTaskModel _workTask;
-        public WorkTaskModel WorkTask
+        private WorkTask _workTask;
+        public WorkTask WorkTask
         {
             get
             {
@@ -55,7 +55,7 @@ namespace HalcyonHomeManager.ViewModels
             }
         }
 
-        public async void LoadItemId(WorkTaskModel rawWorkTask)
+        public async void LoadItemId(WorkTask rawWorkTask)
         {
             try
             {
@@ -89,13 +89,13 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "LoadItemId");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "LoadItemId");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
 
-        private WorkTaskModel _selectedWorkTask;
-        public WorkTaskModel SelectedWorkTask
+        private WorkTask _selectedWorkTask;
+        public WorkTask SelectedWorkTask
         {
             get => _selectedWorkTask;
             set => SetProperty(ref _selectedWorkTask, value);
@@ -187,7 +187,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "GetHouseHold");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "GetHouseHold");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                 return newList;
             }
@@ -245,14 +245,14 @@ namespace HalcyonHomeManager.ViewModels
                     try
                     {
                         WorkTaskViewModel rawWorkTaskViewModel = (WorkTaskViewModel)obj;
-                        WorkTaskModel workTask = rawWorkTaskViewModel.SelectedWorkTask;
+                        WorkTask workTask = rawWorkTaskViewModel.SelectedWorkTask;
                         workTask.Completed = 0;
                         workTask.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
                         await Shell.Current.GoToAsync("..");
                     }
                     catch (Exception ex)
                     {
-                        ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "OnDelete");
+                        ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "OnDelete");
                         App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                     }
                 }
@@ -268,14 +268,14 @@ namespace HalcyonHomeManager.ViewModels
                     try
                     {
                         WorkTaskViewModel rawWorkTaskViewModel = (WorkTaskViewModel)obj;
-                        WorkTaskModel workTask = rawWorkTaskViewModel.SelectedWorkTask;
+                        WorkTask workTask = rawWorkTaskViewModel.SelectedWorkTask;
                         workTask.Completed = 1;
                         workTask.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
                         await Shell.Current.GoToAsync("..");
                     }
                     catch (Exception ex)
                     {
-                        ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "OnComplete");
+                        ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "OnComplete");
                         App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                     }
                 }
@@ -291,7 +291,7 @@ namespace HalcyonHomeManager.ViewModels
                 WorkTaskViewModel rawWorkTaskViewModel = (WorkTaskViewModel)obj;
                 var bb = rawWorkTaskViewModel.HouseHoldMembers;
 
-                WorkTaskModel workTask = rawWorkTaskViewModel.SelectedWorkTask;
+                WorkTask workTask = rawWorkTaskViewModel.SelectedWorkTask;
                 workTask.Assignment = String.IsNullOrEmpty(workTask.Assignment) ? "N/A" : workTask.Assignment;
 
                 string selName = string.Empty;
@@ -324,7 +324,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "OnSave");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkTaskViewModel", "OnSave");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }

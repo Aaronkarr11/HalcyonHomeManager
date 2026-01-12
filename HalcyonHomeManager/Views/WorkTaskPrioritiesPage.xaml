@@ -20,7 +20,7 @@
                 <CollectionView x:Name="WorkItemListView" ItemsSource="{Binding WorkTaskList}" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Padding="10" x:DataType="model:WorkTaskModel">
+                            <StackLayout Padding="10" x:DataType="model:WorkTask">
                                 <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True"  BackgroundColor="Azure">
                                     <Grid>
                                         <Grid.ColumnDefinitions>

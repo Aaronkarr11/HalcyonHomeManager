@@ -1,4 +1,4 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -54,7 +54,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "HouseHoldMemberViewModel", "LoadItemId");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldMemberViewModel", "LoadItemId");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -109,7 +109,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "HouseHoldMemberViewModel", "OnSave");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldMemberViewModel", "OnSave");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }

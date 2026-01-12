@@ -1,4 +1,4 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
 using System.Text.RegularExpressions;
 
 namespace HalcyonHomeManager
@@ -55,9 +55,9 @@ namespace HalcyonHomeManager
             }
         }
 
-        public static ErrorLogModel ReturnErrorMessage(Exception ex, string className, string nethodName)
+        public static ErrorLog ReturnErrorMessage(Exception ex, string className, string nethodName)
         {
-            ErrorLogModel error = new ErrorLogModel();
+            ErrorLog error = new ErrorLog();
             error.Message = ex.Message;
             error.ClassName = className;
             error.MethodName = nethodName;
@@ -65,9 +65,9 @@ namespace HalcyonHomeManager
             return error;
         }
 
-        public static ErrorLogModel ReturnLogMessage(string message, string className, string nethodName)
+        public static ErrorLog ReturnLogMessage(string message, string className, string nethodName)
         {
-            ErrorLogModel error = new ErrorLogModel();
+            ErrorLog error = new ErrorLog();
             error.Message = message;
             error.ClassName = className;
             error.MethodName = nethodName;

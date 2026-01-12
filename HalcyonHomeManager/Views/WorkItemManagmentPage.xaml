@@ -292,7 +292,7 @@
                                         <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  BindableLayout.ItemsSource="{Binding WorkTaskHierarchy}">
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate>
-                                                    <StackLayout x:DataType="model:WorkTaskModel" Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                                                    <StackLayout x:DataType="model:WorkTask" Orientation="Vertical" HorizontalOptions="FillAndExpand">
 
                                                         <controls:WorkTaskCard BorderColor="pink"
                                                                 WorkTaskTitle="{Binding Title}"

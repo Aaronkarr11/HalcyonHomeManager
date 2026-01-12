@@ -1,4 +1,4 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -26,7 +26,7 @@ namespace HalcyonHomeManager.ViewModels
 
             try
             {
-              //  ErrorLogModel model = new ErrorLogModel();
+              //  ErrorLog model = new ErrorLog();
 
                 if (ErrorLogList.Count == 0)
                 {
@@ -49,8 +49,8 @@ namespace HalcyonHomeManager.ViewModels
         }
 
 
-        private List<ErrorLogModel> _errorLogList;
-        public List<ErrorLogModel> ErrorLogList
+        private List<ErrorLog> _errorLogList;
+        public List<ErrorLog> ErrorLogList
         {
             get => _errorLogList;
             set => SetProperty(ref _errorLogList, value);

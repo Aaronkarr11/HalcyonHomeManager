@@ -18,7 +18,7 @@
                 <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  BindableLayout.ItemsSource="{Binding ErrorLogList}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout x:DataType="model:ErrorLogModel" Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                            <StackLayout x:DataType="model:ErrorLog" Orientation="Vertical" HorizontalOptions="FillAndExpand">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>

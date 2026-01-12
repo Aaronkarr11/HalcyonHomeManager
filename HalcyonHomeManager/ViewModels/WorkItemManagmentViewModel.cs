@@ -1,4 +1,4 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
 using Newtonsoft.Json;
 using System.Windows.Input;
 
@@ -6,7 +6,7 @@ namespace HalcyonHomeManager.ViewModels
 {
     public class WorkItemManagmentViewModel : BaseViewModel
     {
-        private ProjectModel _selectedProject;
+        private Project _selectedProject;
         public Command LoadWorkItemCommand { get; }
         public Command AddItemCommand { get; }
 
@@ -27,7 +27,7 @@ namespace HalcyonHomeManager.ViewModels
         {
             ShowPicker = false;
             _selectedProject = null;
-            ProjectList = new List<ProjectModel>();
+            ProjectList = new List<Project>();
             WorkItemHierarchy = new List<ProjectHierarchy>();
             DeviceFontSize = Helpers.ReturnDeviceFontSize();
             DeviceButtonWidth = Helpers.ReturnDeviceButtonWidth();
@@ -56,11 +56,11 @@ namespace HalcyonHomeManager.ViewModels
             GetSelectedProjectsCommand = new Command((name) =>
             {
                 Picker picker = (Picker)name;
-                GetWorkTaskHierarchy((ProjectModel)picker.SelectedItem);
+                GetWorkTaskHierarchy((Project)picker.SelectedItem);
             });
         }
 
-        async void GetWorkTaskHierarchy(ProjectModel item)
+        async void GetWorkTaskHierarchy(Project item)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "GetWorkTaskHierarchy");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "GetWorkTaskHierarchy");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -98,8 +98,8 @@ namespace HalcyonHomeManager.ViewModels
         {
             try
             {
-                var workTask = (WorkTaskModel)sender;
-                WorkTaskModel workTaskModel = new WorkTaskModel
+                var workTask = (WorkTask)sender;
+                WorkTask WorkTask = new WorkTask
                 {
                     Title = workTask.Title,
                     Assignment = workTask.Assignment,
@@ -117,16 +117,16 @@ namespace HalcyonHomeManager.ViewModels
                     Description = workTask.Description,
                     Completed = 0
                 };
-                var result = JsonConvert.SerializeObject(workTaskModel);
+                var result = JsonConvert.SerializeObject(WorkTask);
                 var navigationParameter = new Dictionary<string, object>
                     {
-                            { "WorkTask", workTaskModel }
+                            { "WorkTask", WorkTask }
                     };
                 await Shell.Current.GoToAsync($"WorkTaskPage", navigationParameter);
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteEditWorkTaskCommand");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteEditWorkTaskCommand");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -137,7 +137,7 @@ namespace HalcyonHomeManager.ViewModels
             {
                 var parentProject = (ProjectHierarchy)sender;
 
-                WorkTaskModel workTaskModel = new WorkTaskModel
+                WorkTask WorkTask = new WorkTask
                 {
                     ParentPartitionKey = parentProject.PartitionKey,
                     ParentRowKey = parentProject.RowKey,
@@ -150,16 +150,16 @@ namespace HalcyonHomeManager.ViewModels
                     TargetDate = DateTime.Now,
                     Completed = 0
                 };
-                var result = JsonConvert.SerializeObject(workTaskModel);
+                var result = JsonConvert.SerializeObject(WorkTask);
                 var navigationParameter = new Dictionary<string, object>
                     {
-                            { "WorkTask", workTaskModel }
+                            { "WorkTask", WorkTask }
                     };
                 await Shell.Current.GoToAsync($"WorkTaskPage", navigationParameter);
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteNewWorkTaskCommand");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteNewWorkTaskCommand");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -170,7 +170,7 @@ namespace HalcyonHomeManager.ViewModels
             _selectedProject = null;
             try
             {
-                ProjectModel projectModel = new ProjectModel
+                Project Project = new Project
                 {
                     StartDate = DateTime.Now,
                     TargetDate = DateTime.Now,
@@ -183,13 +183,13 @@ namespace HalcyonHomeManager.ViewModels
 
                 var navigationParameter = new Dictionary<string, object>
                     {
-                            { "Project", projectModel }
+                            { "Project", Project }
                     };
                 await Shell.Current.GoToAsync($"ProjectPage", navigationParameter);
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteNewProjectCommand");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteNewProjectCommand");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -199,7 +199,7 @@ namespace HalcyonHomeManager.ViewModels
             try
             {
                 var prog = (ProjectHierarchy)sender;
-                ProjectModel projectModel = new ProjectModel
+                Project Project = new Project
                 {
                     Title = prog.Title,
                     Severity = prog.Severity ?? "4 - Low",
@@ -213,13 +213,13 @@ namespace HalcyonHomeManager.ViewModels
                 };
                 var navigationParameter = new Dictionary<string, object>
                     {
-                            { "Project", projectModel }
+                            { "Project", Project }
                     };
                 await Shell.Current.GoToAsync($"ProjectPage", navigationParameter);
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteEditProjectCommand");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteEditProjectCommand");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -228,8 +228,8 @@ namespace HalcyonHomeManager.ViewModels
         {
             try
             {
-                List<ProjectModel> projList = new List<ProjectModel>();
-                //  List<ProjectModel> projList = await _transactionServices.GetProjectList(DeviceInfo.Name.RemoveSpecialCharacters());
+                List<Project> projList = new List<Project>();
+                //  List<Project> projList = await _transactionServices.GetProjectList(DeviceInfo.Name.RemoveSpecialCharacters());
                 IsBusy = true;
                 if (_selectedProject != null)
                 {
@@ -262,7 +262,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "OnAppearing");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "OnAppearing");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -282,8 +282,8 @@ namespace HalcyonHomeManager.ViewModels
         }
 
 
-        private List<ProjectModel> _projectList;
-        public List<ProjectModel> ProjectList
+        private List<Project> _projectList;
+        public List<Project> ProjectList
         {
             get => _projectList;
             set => SetProperty(ref _projectList, value);

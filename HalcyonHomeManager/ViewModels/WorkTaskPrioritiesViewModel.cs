@@ -1,4 +1,4 @@
-﻿using HalcyonHomeManager.Models;
+﻿using HalcyonHomeManager.Entities;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -6,7 +6,7 @@ namespace HalcyonHomeManager.ViewModels
     [QueryProperty(nameof(WorkTask), nameof(WorkTask))]
     public class WorkTaskPrioritiesViewModel : BaseViewModel
     {
-        private WorkTaskModel _selectedWorkTask;
+        private WorkTask _selectedWorkTask;
 
         public Command EditWorkTaskCommand { get; private set; }
 
@@ -20,8 +20,8 @@ namespace HalcyonHomeManager.ViewModels
             });
         }
 
-        private WorkTaskModel _workTask;
-        public WorkTaskModel WorkTask
+        private WorkTask _workTask;
+        public WorkTask WorkTask
         {
             get
             {
@@ -45,7 +45,7 @@ namespace HalcyonHomeManager.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkTaskPrioritiesViewModel", "OnAppearing");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkTaskPrioritiesViewModel", "OnAppearing");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
 
@@ -53,10 +53,10 @@ namespace HalcyonHomeManager.ViewModels
 
         async void ExecuteEditWorkTaskCommand(object sender)
         {
-            var workTask = (WorkTaskModel)sender;
+            var workTask = (WorkTask)sender;
             try
             {
-                WorkTaskModel workTaskModel = new WorkTaskModel
+                WorkTask WorkTask = new WorkTask
                 {
                     Title = workTask.Title,
                     Assignment = workTask?.Assignment.Trim(),
@@ -76,19 +76,19 @@ namespace HalcyonHomeManager.ViewModels
                 };
                 var navigationParameter = new Dictionary<string, object>
                     {
-                            { "WorkTask", workTaskModel }
+                            { "WorkTask", WorkTask }
                     };
                 await Shell.Current.GoToAsync($"WorkTaskPage", navigationParameter);
             }
             catch (Exception ex)
             {
-                ErrorLogModel error = Helpers.ReturnErrorMessage(ex, "WorkTaskPrioritiesViewModel", "OnAppearing");
+                ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkTaskPrioritiesViewModel", "OnAppearing");
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
 
-        private List<WorkTaskModel> _workTaskList;
-        public List<WorkTaskModel> WorkTaskList
+        private List<WorkTask> _workTaskList;
+        public List<WorkTask> WorkTaskList
         {
             get => _workTaskList;
             set => SetProperty(ref _workTaskList, value);
