@@ -12,7 +12,7 @@ namespace HalcyonHomeManager.ViewModels
 
         public Command OnRefreshCommand { get; }
 
-        public Command<RequestItemResponse> ItemTapped { get; }
+        public Command<RequestItems> ItemTapped { get; }
 
         public ICommand GetSelectedProjectsCommand { get; private set; }
 
@@ -105,12 +105,8 @@ namespace HalcyonHomeManager.ViewModels
                     Assignment = workTask.Assignment,
                     Risk = workTask.Risk ?? "3 - Low",
                     SendSMS = workTask.SendSMS,
-                    RowKey = workTask.RowKey,
                     State = workTask.State ?? "New",
-                    PartitionKey = workTask.PartitionKey,
                     Effort = workTask.Effort == 0 ? 1 : workTask.Effort,
-                    ParentPartitionKey = workTask.ParentPartitionKey,
-                    ParentRowKey = workTask.ParentRowKey,
                     Priority = workTask.Priority == 0 ? 1 : workTask.Priority,
                     StartDate = workTask.StartDate,
                     TargetDate = workTask.TargetDate,
@@ -139,8 +135,6 @@ namespace HalcyonHomeManager.ViewModels
 
                 WorkTask WorkTask = new WorkTask
                 {
-                    ParentPartitionKey = parentProject.PartitionKey,
-                    ParentRowKey = parentProject.RowKey,
                     State = "New",
                     Risk = "3 - Low",
                     SendSMS = false,

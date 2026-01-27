@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using HalcyonHomeManager.DataLayer;
 using HalcyonHomeManager.Services;
 using Maui.FixesAndWorkarounds;
 using SkiaSharp.Views.Maui.Controls.Hosting;
@@ -22,6 +23,7 @@ public static class MauiProgram
             });
 
         builder.Services.AddSingleton<IAlertService, AlertService>();
+        builder.Services.AddSingleton<WorkItemDatabase>();
         return builder.Build();
     }
 }

@@ -1,14 +1,9 @@
 ﻿using HalcyonHomeManager.Entities;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HalcyonHomeManager.DataLayer
 {
-    public class HalcyonHomeManagerDatabase
+    public class WorkItemDatabase
     {
 
         SQLiteAsyncConnection database;
@@ -19,7 +14,7 @@ namespace HalcyonHomeManager.DataLayer
                 return;
 
             database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-            var result = await database.CreateTableAsync<Project>();
+            await database.CreateTableAsync<WorkItem>();
         }
 
         public async Task<List<WorkItem>> GetItemsAsync()
@@ -29,6 +24,7 @@ namespace HalcyonHomeManager.DataLayer
         }
 
         //This is an example of using a query to return data
+        //
         //public async Task<List<WorkItem>> GetItemsNotDoneAsync()
         //{
         //    await Init();

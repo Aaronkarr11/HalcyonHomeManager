@@ -17,7 +17,7 @@ namespace HalcyonHomeManager.ViewModels
 
         public Command OnRefreshCommand { get; }
 
-        public Command<RequestItemResponse> ItemTapped { get; }
+        public Command<RequestItems> ItemTapped { get; }
 
         public ICommand CompleteCommand { get; private set; }
 
