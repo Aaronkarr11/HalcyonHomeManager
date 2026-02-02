@@ -70,10 +70,8 @@ namespace HalcyonHomeManager.ViewModels
                     SelectedWorkTask.Assignment = SelectedWorkTask.Assignment;
                 }
 
-                if (String.IsNullOrEmpty(SelectedWorkTask.PartitionKey) && String.IsNullOrEmpty(SelectedWorkTask.RowKey))
+                if (SelectedWorkTask.ID == 0)
                 {
-                    SelectedWorkTask.PartitionKey = System.Guid.NewGuid().ToString();
-                    SelectedWorkTask.RowKey = System.Guid.NewGuid().ToString();
                     Name = $"Create a New Work Task";
                     ShowDeleteButton = false;
                 }
