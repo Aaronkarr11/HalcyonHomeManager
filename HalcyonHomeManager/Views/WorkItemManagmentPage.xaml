@@ -4,7 +4,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:HalcyonHomeManager.Controls"
              xmlns:viewmodels="clr-namespace:HalcyonHomeManager.ViewModels" 
-             xmlns:model="clr-namespace:HalcyonHomeManager.Models" 
+             xmlns:model="clr-namespace:HalcyonHomeManager.Entities" 
              x:DataType="viewmodels:WorkItemManagmentViewModel"
              x:Class="HalcyonHomeManager.Views.WorkItemManagmentPage"
              Title="{Binding SelectedProject}"

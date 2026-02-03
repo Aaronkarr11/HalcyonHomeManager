@@ -11,6 +11,7 @@ namespace HalcyonHomeManager.Entities
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        public int ProjectReferenceID { get; set; }
         public string DeviceName { get; set; }
         public string Assignment { get; set; }
         public string State { get; set; }
@@ -21,6 +22,7 @@ namespace HalcyonHomeManager.Entities
         public int Priority { get; set; }
         public string DisplayStartDate { get; set; }
         public string DisplayTargetDate { get; set; }
+        public DateTime TimeStamp { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? TargetDate { get; set; }
         public string Description { get; set; }

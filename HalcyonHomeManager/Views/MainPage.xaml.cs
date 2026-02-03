@@ -1,15 +1,17 @@
-﻿using HalcyonHomeManager.ViewModels;
+﻿using HalcyonHomeManager.Interfaces;
+using HalcyonHomeManager.ViewModels;
 
 namespace HalcyonHomeManager.Views
 {
     [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class MainPage : ContentPage
     {
+        private readonly ITransactionManager _transactionManager;
         HomeViewModel _viewModel;
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new HomeViewModel();
+            BindingContext = _viewModel = new HomeViewModel(_transactionManager);
         }
 
         protected override void OnAppearing()

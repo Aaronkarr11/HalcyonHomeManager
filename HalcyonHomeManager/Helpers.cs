@@ -61,7 +61,6 @@ namespace HalcyonHomeManager
             error.Message = ex.Message;
             error.ClassName = className;
             error.MethodName = nethodName;
-            error.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
             return error;
         }
 
@@ -71,7 +70,6 @@ namespace HalcyonHomeManager
             error.Message = message;
             error.ClassName = className;
             error.MethodName = nethodName;
-            error.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
             return error;
         }
 
@@ -115,6 +113,19 @@ namespace HalcyonHomeManager
                 "Done" => Microsoft.Maui.Graphics.Color.FromRgb(0, 102, 0),
                 _ => Microsoft.Maui.Graphics.Color.FromRgb(0, 72, 255),
             };
+        }
+
+        public static string LastDayInThisMonth(this DateTime providedDate)
+        {
+            try
+            {
+                DateTime endOfMonth = new DateTime(providedDate.Year, providedDate.Month, DateTime.DaysInMonth(providedDate.Year, providedDate.Month));
+                return endOfMonth.ToString().Split(" ")[0];
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 

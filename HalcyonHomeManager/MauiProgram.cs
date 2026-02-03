@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui;
+using HalcyonHomeManager.BusinessLogic;
 using HalcyonHomeManager.DataLayer;
+using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.Services;
 using Maui.FixesAndWorkarounds;
 using SkiaSharp.Views.Maui.Controls.Hosting;
@@ -22,8 +24,13 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        builder.Services.AddTransient<ITransactionManager, TransactionManager>();
         builder.Services.AddSingleton<IAlertService, AlertService>();
-        builder.Services.AddSingleton<WorkItemDatabase>();
+        builder.Services.AddSingleton<RequestItemsDatabase>();
+        builder.Services.AddSingleton<ErrorLogDatabase>();
+        builder.Services.AddSingleton<HouseHoldDatabase>();
+        builder.Services.AddSingleton<ProjectDatabase>();
+        builder.Services.AddSingleton<WorkTaskDatabase>();
         return builder.Build();
     }
 }

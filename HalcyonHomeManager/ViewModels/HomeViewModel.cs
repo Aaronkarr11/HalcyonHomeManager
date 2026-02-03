@@ -1,22 +1,23 @@
-﻿using LiveChartsCore;
+﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Interfaces;
+using HalcyonHomeManager.Models;
+using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Newtonsoft.Json;
 using SkiaSharp;
-using HalcyonHomeManager.Models;
-using HalcyonHomeManager.Entities;
 
 namespace HalcyonHomeManager.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-
-        public HomeViewModel()
+        private readonly ITransactionManager _transactionManager;
+        public HomeViewModel(ITransactionManager transactionManager)
         {
 
+                _transactionManager = transactionManager;
                 var name = "Welcome!";
-                Title = name;
-            
+                Title = name; 
         }
 
         public async void OnAppearing()
@@ -27,7 +28,8 @@ namespace HalcyonHomeManager.ViewModels
                 LineGraphTitle = $"Total Completed Work for {DateTime.Now.Year}";
                 PieGraphTitle = $"Work Tasks Overview for {DateTime.Now.Year}";
                 BarGraphTitle = $"Comparison of Last Month & Current Month";
-                DashBoardData = new DashBoard();
+                DashBoardData = await _transactionManager.GetDashBoardData();
+
                 if (DashBoardData == null)
                 {
                     App._alertSvc.ShowAlert("No Data!", $"There is no work to present. Go to the Work tab to create some.");

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodels="clr-namespace:HalcyonHomeManager.ViewModels"
-             xmlns:model="clr-namespace:HalcyonHomeManager.Models" 
+             xmlns:model="clr-namespace:HalcyonHomeManager.Entities" 
              x:DataType="viewmodels:ItemRequestViewModel"
              xmlns:controls="clr-namespace:HalcyonHomeManager.Controls"
              x:Class="HalcyonHomeManager.Views.ItemRequestPage"
@@ -100,7 +100,7 @@
             <CollectionView x:Name="RequestItemsListView" ItemsSource="{Binding RequestItems}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10" x:DataType="model:RequestItemsModel">
+                        <StackLayout Padding="10" x:DataType="model:RequestItems">
                             <controls:CardView BorderColor="DarkGray"
                            CardTitle="{Binding Title}"
                            CardDescription="{Binding DesiredDateDisplay}"

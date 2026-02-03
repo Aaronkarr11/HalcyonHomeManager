@@ -17,19 +17,19 @@ namespace HalcyonHomeManager.DataLayer
             await database.CreateTableAsync<ErrorLog>();
         }
 
-        public async Task<List<ErrorLog>> GetItemsAsync()
+        public async Task<List<ErrorLog>> GetErrorLogsAsync()
         {
             await Init();
             return await database.Table<ErrorLog>().ToListAsync();
         }
 
-        public async Task<ErrorLog> GetItemAsync(int id)
+        public async Task<ErrorLog> GetErrorLogAsync(int id)
         {
             await Init();
             return await database.Table<ErrorLog>().Where(i => i.ID == id).FirstOrDefaultAsync();
         }
 
-        public async Task<int> SaveItemAsync(ErrorLog item)
+        public async Task<int> SaveErrorLogAsync(ErrorLog item)
         {
             await Init();
             if (item.ID != 0)
@@ -38,7 +38,7 @@ namespace HalcyonHomeManager.DataLayer
                 return await database.InsertAsync(item);
         }
 
-        public async Task<int> DeleteItemAsync(ErrorLog item)
+        public async Task<int> DeleteErrorLogAsync(ErrorLog item)
         {
             await Init();
             return await database.DeleteAsync(item);

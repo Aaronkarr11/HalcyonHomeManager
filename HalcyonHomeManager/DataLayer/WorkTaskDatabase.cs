@@ -17,19 +17,19 @@ namespace HalcyonHomeManager.DataLayer
             await database.CreateTableAsync<WorkTask>();
         }
 
-        public async Task<List<WorkTask>> GetItemsAsync()
+        public async Task<List<WorkTask>> GetWorkTasksAsync()
         {
             await Init();
             return await database.Table<WorkTask>().ToListAsync();
         }
 
-        public async Task<WorkTask> GetItemAsync(int id)
+        public async Task<WorkTask> GetWorkTaskAsync(int id)
         {
             await Init();
             return await database.Table<WorkTask>().Where(i => i.ID == id).FirstOrDefaultAsync();
         }
 
-        public async Task<int> SaveItemAsync(WorkTask item)
+        public async Task<int> SaveWorkTaskAsync(WorkTask item)
         {
             await Init();
             if (item.ID != 0)
@@ -38,7 +38,7 @@ namespace HalcyonHomeManager.DataLayer
                 return await database.InsertAsync(item);
         }
 
-        public async Task<int> DeleteItemAsync(WorkTask item)
+        public async Task<int> DeleteWorkTaskAsync(WorkTask item)
         {
             await Init();
             return await database.DeleteAsync(item);
