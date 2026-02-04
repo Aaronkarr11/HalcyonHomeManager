@@ -2,6 +2,7 @@
 using HalcyonHomeManager.Entities;
 using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.Models;
+using SQLite;
 using System.Globalization;
 
 namespace HalcyonHomeManager.BusinessLogic
@@ -11,11 +12,15 @@ namespace HalcyonHomeManager.BusinessLogic
         WorkTaskDatabase _workTaskDatabase;
         ProjectDatabase _projectDatabase;
         ErrorLogDatabase _errorLogDatabase;
-        public TransactionManager(WorkTaskDatabase workTaskDatabase, ProjectDatabase projectDatabase, ErrorLogDatabase errorLogDatabase)
+        HouseHoldDatabase _houseHoldDatabase;
+        RequestItemsDatabase _requestItemsDatabase;
+        public TransactionManager(WorkTaskDatabase workTaskDatabase, ProjectDatabase projectDatabase, ErrorLogDatabase errorLogDatabase, HouseHoldDatabase houseHoldDatabase, RequestItemsDatabase requestItemsDatabase)
         {
             _workTaskDatabase = workTaskDatabase;
             _projectDatabase = projectDatabase;
             _errorLogDatabase = errorLogDatabase;
+            _houseHoldDatabase = houseHoldDatabase;
+            _requestItemsDatabase = requestItemsDatabase;
         }
 
 
@@ -27,8 +32,13 @@ namespace HalcyonHomeManager.BusinessLogic
                 BarGraphModelItem barGraphModelItem = new BarGraphModelItem();
                 List<LineGraphModelItem> lineGraphModel = new List<LineGraphModelItem>();
 
+                List<WorkTask> workTaskResult = new List<WorkTask>();
+
                 var workTaskResultAsync = _workTaskDatabase.GetWorkTasksAsync();
-                List<WorkTask> workTaskResult = await workTaskResultAsync;
+                if (workTaskResultAsync != null)
+                {
+                    workTaskResult = await workTaskResultAsync;
+                }
 
                 DateTime todayOfCurrentMonth = Convert.ToDateTime(DateTime.Now.LastDayInThisMonth());
                 DateTime todayOfLastMonth = Convert.ToDateTime(DateTime.Now.AddMonths(-1).LastDayInThisMonth());
@@ -56,7 +66,7 @@ namespace HalcyonHomeManager.BusinessLogic
             }
             catch (Exception ex)
             {
-                return new DashBoard();
+                return null;
             }
         }
 
@@ -65,11 +75,12 @@ namespace HalcyonHomeManager.BusinessLogic
         {
             try
             {
-                var workTaskResultAsync = _workTaskDatabase.GetWorkTasksAsync();
-                List<WorkTask> workTaskResult = await workTaskResultAsync;
 
                 var projectResultAsync = _projectDatabase.GetProjectsAsync();
                 List<Project> projectResult = await projectResultAsync;
+
+                var workTaskResultAsync = _workTaskDatabase.GetWorkTasksAsync();
+                List<WorkTask> workTaskResult = await workTaskResultAsync;
 
                 List<ProjectHierarchy> ProjectList = new List<ProjectHierarchy>();
                 List<WorkTask> WorkTaskList = new List<WorkTask>();
@@ -129,17 +140,79 @@ namespace HalcyonHomeManager.BusinessLogic
             }
         }
 
-        public async void CreateNewError(string message)
+
+        public async void DeleteWorkTask(WorkTask workTask)
         {
             try
             {
-                ErrorLog errorLog = new ErrorLog();
-                errorLog.Message = message;
-                await _errorLogDatabase.SaveErrorLogAsync(errorLog);
+                await _workTaskDatabase.DeleteWorkTaskAsync(workTask);
             }
             catch (Exception ex)
             {
 
+            }
+        }
+
+        public async void CreateWorkTask(WorkTask workTask)
+        {
+            try
+            {
+                await _workTaskDatabase.SaveWorkTaskAsync(workTask);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async void CreateProject(Project project)
+        {
+            try
+            {
+                project.ConvertedDateTimeStamp = Convert.ToInt64(Convert.ToDateTime(project.CreatedDate).ToString("yyyyMMddHHmmss"));
+                await _projectDatabase.SaveProjectAsync(project);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async void DeleteProject(Project project)
+        {
+            try
+            {
+                await _projectDatabase.DeleteProjectAsync(project);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async void CreateNewError(ErrorLog error)
+        {
+            try
+            {
+                await _errorLogDatabase.SaveErrorLogAsync(error);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async Task<List<HouseHoldMember>> GetHouseHoldList()
+        {
+            try
+            {
+                var houseHoldAsync = _houseHoldDatabase.GetHouseHoldsAsync();
+                List<HouseHoldMember> houseHoldResult = await houseHoldAsync;
+                return houseHoldResult;
+            }
+            catch (Exception)
+            {
+                return new List<HouseHoldMember>();
             }
         }
 

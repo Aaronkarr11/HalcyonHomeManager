@@ -11,13 +11,14 @@ namespace HalcyonHomeManager.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        private readonly ITransactionManager _transactionManager;
-        public HomeViewModel(ITransactionManager transactionManager)
+        private ITransactionManager _transactionServices;
+        public HomeViewModel(ITransactionManager transactionServices)
         {
+            _transactionServices = transactionServices;
 
-                _transactionManager = transactionManager;
-                var name = "Welcome!";
-                Title = name; 
+            var name = "Welcome!";
+            Title = name;
+
         }
 
         public async void OnAppearing()
@@ -28,7 +29,7 @@ namespace HalcyonHomeManager.ViewModels
                 LineGraphTitle = $"Total Completed Work for {DateTime.Now.Year}";
                 PieGraphTitle = $"Work Tasks Overview for {DateTime.Now.Year}";
                 BarGraphTitle = $"Comparison of Last Month & Current Month";
-                DashBoardData = await _transactionManager.GetDashBoardData();
+                DashBoardData = await _transactionServices.GetDashBoardData();
 
                 if (DashBoardData == null)
                 {
@@ -151,6 +152,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "HomeViewModel", "OnAppearing");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }

@@ -1,4 +1,5 @@
 ﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Interfaces;
 using Newtonsoft.Json;
 using System.Windows.Input;
 
@@ -6,6 +7,8 @@ namespace HalcyonHomeManager.ViewModels
 {
     public class WorkItemManagmentViewModel : BaseViewModel
     {
+        private ITransactionManager _transactionServices;
+
         private Project _selectedProject;
         public Command LoadWorkItemCommand { get; }
         public Command AddItemCommand { get; }
@@ -23,9 +26,10 @@ namespace HalcyonHomeManager.ViewModels
         public Command NewWorkTaskCommand { get; private set; }
         public Command EditOperationCommand { get; private set; }
 
-        public WorkItemManagmentViewModel()
+        public WorkItemManagmentViewModel(ITransactionManager transactionServices)
         {
             ShowPicker = false;
+            _transactionServices = transactionServices;
             _selectedProject = null;
             ProjectList = new List<Project>();
             WorkItemHierarchy = new List<ProjectHierarchy>();
@@ -66,15 +70,15 @@ namespace HalcyonHomeManager.ViewModels
             {
                 if (item != null)
                 {
-                    if (true)
+                    if (item.ID == 0)
                     {
                         ExecuteNewProjectCommand();
                     }
                     else
                     {
                         _selectedProject = item;
-                       // var result = await _transactionServices.GetWorkItemHierarchy(DeviceInfo.Name.RemoveSpecialCharacters());
-                       // WorkItemHierarchy = result.Where(e => e.PartitionKey == item.PartitionKey && e.RowKey == item.RowKey).ToList();
+                        var result = await _transactionServices.GetWorkItemHierarchy();
+                        WorkItemHierarchy = result.Where(e => e.ID == item.ID).ToList();
 
                         if (String.IsNullOrEmpty(SelectedProject))
                         {
@@ -90,6 +94,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "GetWorkTaskHierarchy");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -101,6 +106,7 @@ namespace HalcyonHomeManager.ViewModels
                 var workTask = (WorkTask)sender;
                 WorkTask WorkTask = new WorkTask
                 {
+                    ID = workTask.ID,
                     Title = workTask.Title,
                     Assignment = workTask.Assignment,
                     Risk = workTask.Risk ?? "3 - Low",
@@ -123,6 +129,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteEditWorkTaskCommand");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -135,6 +142,7 @@ namespace HalcyonHomeManager.ViewModels
 
                 WorkTask WorkTask = new WorkTask
                 {
+                    ProjectReferenceID = parentProject.ID,
                     State = "New",
                     Risk = "3 - Low",
                     SendSMS = false,
@@ -154,6 +162,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteNewWorkTaskCommand");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -184,6 +193,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteNewProjectCommand");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -195,6 +205,7 @@ namespace HalcyonHomeManager.ViewModels
                 var prog = (ProjectHierarchy)sender;
                 Project Project = new Project
                 {
+                    ID = prog.ID,
                     Title = prog.Title,
                     Severity = prog.Severity ?? "4 - Low",
                     State = prog.State,
@@ -214,6 +225,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "ExecuteEditProjectCommand");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -222,8 +234,8 @@ namespace HalcyonHomeManager.ViewModels
         {
             try
             {
-                List<Project> projList = new List<Project>();
-                //  List<Project> projList = await _transactionServices.GetProjectList(DeviceInfo.Name.RemoveSpecialCharacters());
+                //List<Project> projList = new List<Project>();
+                List<Project> projList = await _transactionServices.GetProjectList();
                 IsBusy = true;
                 if (_selectedProject != null)
                 {
@@ -237,7 +249,11 @@ namespace HalcyonHomeManager.ViewModels
                     ProjectList = projList.OrderBy(p => p.ConvertedDateTimeStamp).ToList();
                     if (ProjectList.Count() > 1)
                     {
-                        _selectedProject = ProjectList.Where(i => i.ConvertedDateTimeStamp != 0).LastOrDefault();
+                        _selectedProject = ProjectList.Where(i => i?.ConvertedDateTimeStamp != 0).LastOrDefault();
+                        if (_selectedProject == null)
+                        {
+                            _selectedProject = ProjectList.Where(h => h.Title != "Create New").FirstOrDefault();
+                        }
                         PickerTitle = _selectedProject.Title;
                         GetWorkTaskHierarchy(_selectedProject);
                     }
@@ -257,6 +273,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "WorkItemManagmentViewModel", "OnAppearing");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }

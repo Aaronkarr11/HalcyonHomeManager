@@ -6,12 +6,12 @@ namespace HalcyonHomeManager.Views
     [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class MainPage : ContentPage
     {
-        private readonly ITransactionManager _transactionManager;
         HomeViewModel _viewModel;
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new HomeViewModel(_transactionManager);
+            var service = DependencyService.Get<ITransactionManager>();
+            BindingContext = _viewModel = new HomeViewModel(service);
         }
 
         protected override void OnAppearing()

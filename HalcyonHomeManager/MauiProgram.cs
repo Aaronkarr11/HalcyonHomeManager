@@ -24,13 +24,14 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        builder.Services.AddTransient<ITransactionManager, TransactionManager>();
         builder.Services.AddSingleton<IAlertService, AlertService>();
         builder.Services.AddSingleton<RequestItemsDatabase>();
         builder.Services.AddSingleton<ErrorLogDatabase>();
         builder.Services.AddSingleton<HouseHoldDatabase>();
         builder.Services.AddSingleton<ProjectDatabase>();
         builder.Services.AddSingleton<WorkTaskDatabase>();
+
+        builder.Services.AddTransient<ITransactionManager, TransactionManager>();
         return builder.Build();
     }
 }

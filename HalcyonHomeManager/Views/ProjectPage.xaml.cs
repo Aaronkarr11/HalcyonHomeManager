@@ -1,4 +1,5 @@
-﻿using HalcyonHomeManager.ViewModels;
+﻿using HalcyonHomeManager.Interfaces;
+using HalcyonHomeManager.ViewModels;
 
 namespace HalcyonHomeManager.Views
 {
@@ -7,7 +8,8 @@ namespace HalcyonHomeManager.Views
         public ProjectPage()
         {
             InitializeComponent();
-            BindingContext = new ProjectViewModel();
+            var service = DependencyService.Get<ITransactionManager>();
+            BindingContext = new ProjectViewModel(service);
         }
     }
 }

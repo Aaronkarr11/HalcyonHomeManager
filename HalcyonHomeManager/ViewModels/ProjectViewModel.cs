@@ -1,4 +1,5 @@
 ﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Interfaces;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -7,9 +8,11 @@ namespace HalcyonHomeManager.ViewModels
     public class ProjectViewModel : BaseViewModel
     {
         private Project _project;
+        private ITransactionManager _transactionServices;
 
-        public ProjectViewModel(object project = null)
+        public ProjectViewModel(ITransactionManager transactionServices, object project = null)
         {
+            _transactionServices = transactionServices;
             CancelCommand = new Command(OnCancel);
             DeviceFontSize = Helpers.ReturnDeviceFontSize();
 
@@ -60,7 +63,7 @@ namespace HalcyonHomeManager.ViewModels
             {
                SelectedProject = project;
 
-                if (true)
+                if (SelectedProject.ID == 0)
                 {
                     Name = $"Create a New Project";
                     ShowDeleteButton = false;
@@ -81,6 +84,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "LoadItemId");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -232,11 +236,13 @@ namespace HalcyonHomeManager.ViewModels
                         Project project = rawProjectViewModel.SelectedProject;
                         project.Completed = 0;
                         project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
+                        _transactionServices.DeleteProject(project);
                         await Shell.Current.GoToAsync("..");
                     }
                     catch (Exception ex)
                     {
                         ErrorLog error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "LoadItemId");
+                        _transactionServices.CreateNewError(error);
                         App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                     }
                 }
@@ -257,11 +263,13 @@ namespace HalcyonHomeManager.ViewModels
                         Project project = rawProjectViewModel.SelectedProject;
                         project.Completed = 1;
                         project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
+                        _transactionServices.CreateProject(project);
                         await Shell.Current.GoToAsync("..");
                     }
                     catch (Exception ex)
                     {
                         ErrorLog error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "OnComplete");
+                        _transactionServices.CreateNewError(error);
                         App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                     }
                 }
@@ -276,11 +284,13 @@ namespace HalcyonHomeManager.ViewModels
                 Project project = rawProjectViewModel.SelectedProject;
                 project.Completed = 0;
                 project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
+                _transactionServices.CreateProject(project);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "ProjectViewModel", "OnComplete");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
