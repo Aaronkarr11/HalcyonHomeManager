@@ -32,7 +32,7 @@ namespace HalcyonHomeManager.ViewModels
             _transactionServices = transactionServices;
             _selectedProject = null;
             ProjectList = new List<Project>();
-            WorkItemHierarchy = new List<ProjectHierarchy>();
+            ProjectHierarchy = new List<ProjectHierarchy>();
             DeviceFontSize = Helpers.ReturnDeviceFontSize();
             DeviceButtonWidth = Helpers.ReturnDeviceButtonWidth();
 
@@ -77,8 +77,12 @@ namespace HalcyonHomeManager.ViewModels
                     else
                     {
                         _selectedProject = item;
-                        var result = await _transactionServices.GetWorkItemHierarchy();
-                        WorkItemHierarchy = result.Where(e => e.ID == item.ID).ToList();
+                        var result = await _transactionServices.GetProjectHierarchy();
+                        if (result == null)
+                        {
+                            throw new Exception("Could not build work item hierarchy!");
+                        }
+                        ProjectHierarchy = result.Where(e => e.ProjectID == item.ID).ToList();
 
                         if (String.IsNullOrEmpty(SelectedProject))
                         {
@@ -107,6 +111,7 @@ namespace HalcyonHomeManager.ViewModels
                 WorkTask WorkTask = new WorkTask
                 {
                     ID = workTask.ID,
+                    ProjectReferenceID = workTask.ProjectReferenceID,
                     Title = workTask.Title,
                     Assignment = workTask.Assignment,
                     Risk = workTask.Risk ?? "3 - Low",
@@ -142,7 +147,7 @@ namespace HalcyonHomeManager.ViewModels
 
                 WorkTask WorkTask = new WorkTask
                 {
-                    ProjectReferenceID = parentProject.ID,
+                    ProjectReferenceID = parentProject.ProjectID,
                     State = "New",
                     Risk = "3 - Low",
                     SendSMS = false,
@@ -175,6 +180,7 @@ namespace HalcyonHomeManager.ViewModels
             {
                 Project Project = new Project
                 {
+                    
                     StartDate = DateTime.Now,
                     TargetDate = DateTime.Now,
                     Severity = "4 - Low",
@@ -205,7 +211,7 @@ namespace HalcyonHomeManager.ViewModels
                 var prog = (ProjectHierarchy)sender;
                 Project Project = new Project
                 {
-                    ID = prog.ID,
+                    ID = prog.ProjectID,
                     Title = prog.Title,
                     Severity = prog.Severity ?? "4 - Low",
                     State = prog.State,
@@ -301,11 +307,11 @@ namespace HalcyonHomeManager.ViewModels
         }
 
 
-        private List<ProjectHierarchy> _workItemHierarchy;
-        public List<ProjectHierarchy> WorkItemHierarchy
+        private List<ProjectHierarchy> _projectHierarchy;
+        public List<ProjectHierarchy> ProjectHierarchy
         {
-            get => _workItemHierarchy;
-            set => SetProperty(ref _workItemHierarchy, value);
+            get => _projectHierarchy;
+            set => SetProperty(ref _projectHierarchy, value);
         }
 
         private bool _showPicker;
@@ -328,6 +334,7 @@ namespace HalcyonHomeManager.ViewModels
             get => _retainedSelectedProject;
             set => SetProperty(ref _retainedSelectedProject, value);
         }
+
 
 
     }

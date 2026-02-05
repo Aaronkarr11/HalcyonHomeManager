@@ -25,11 +25,11 @@ public static class MauiProgram
             });
 
         builder.Services.AddSingleton<IAlertService, AlertService>();
-        builder.Services.AddSingleton<RequestItemsDatabase>();
-        builder.Services.AddSingleton<ErrorLogDatabase>();
-        builder.Services.AddSingleton<HouseHoldDatabase>();
-        builder.Services.AddSingleton<ProjectDatabase>();
-        builder.Services.AddSingleton<WorkTaskDatabase>();
+       // builder.Services.AddSingleton<RequestItemsDatabase>();
+        //builder.Services.AddSingleton<ErrorLogDatabase>();
+        //builder.Services.AddSingleton<HouseHoldDatabase>();
+       // builder.Services.AddSingleton<ProjectDatabase>();
+       // builder.Services.AddSingleton<WorkTaskDatabase>();
 
         builder.Services.AddTransient<ITransactionManager, TransactionManager>();
         return builder.Build();

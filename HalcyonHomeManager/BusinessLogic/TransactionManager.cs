@@ -9,18 +9,27 @@ namespace HalcyonHomeManager.BusinessLogic
 {
     public class TransactionManager : ITransactionManager
     {
-        WorkTaskDatabase _workTaskDatabase;
-        ProjectDatabase _projectDatabase;
-        ErrorLogDatabase _errorLogDatabase;
-        HouseHoldDatabase _houseHoldDatabase;
-        RequestItemsDatabase _requestItemsDatabase;
-        public TransactionManager(WorkTaskDatabase workTaskDatabase, ProjectDatabase projectDatabase, ErrorLogDatabase errorLogDatabase, HouseHoldDatabase houseHoldDatabase, RequestItemsDatabase requestItemsDatabase)
+        private readonly WorkTaskDatabase _workTaskDatabase;
+        private readonly ProjectDatabase _projectDatabase;
+        private readonly ErrorLogDatabase _errorLogDatabase;
+        private readonly HouseHoldDatabase _houseHoldDatabase;
+        private readonly RequestItemsDatabase _requestItemsDatabase;
+        public TransactionManager()
         {
-            _workTaskDatabase = workTaskDatabase;
-            _projectDatabase = projectDatabase;
-            _errorLogDatabase = errorLogDatabase;
-            _houseHoldDatabase = houseHoldDatabase;
-            _requestItemsDatabase = requestItemsDatabase;
+            _workTaskDatabase = new WorkTaskDatabase();
+            _projectDatabase = new ProjectDatabase();
+            _errorLogDatabase = new ErrorLogDatabase();
+            _houseHoldDatabase = new HouseHoldDatabase();
+            _requestItemsDatabase = new RequestItemsDatabase();
+
+
+            Task.Run(async () => {
+                await _workTaskDatabase.Init(); 
+                await _projectDatabase.Init();
+                await _errorLogDatabase.Init();
+                await _houseHoldDatabase.Init();
+                await _requestItemsDatabase.Init();
+            }).Wait();
         }
 
 
@@ -43,8 +52,8 @@ namespace HalcyonHomeManager.BusinessLogic
                 DateTime todayOfCurrentMonth = Convert.ToDateTime(DateTime.Now.LastDayInThisMonth());
                 DateTime todayOfLastMonth = Convert.ToDateTime(DateTime.Now.AddMonths(-1).LastDayInThisMonth());
 
-                List<WorkTask> workTaskList = new List<WorkTask>();
-
+               List<WorkTask> workTaskList = new List<WorkTask>();
+                string pog = workTaskResult.FirstOrDefault().TimeStamp.ToString("yyyy");
                 // newResults = workTaskResult.Where(o => o.Timestamp >= todayOfLastMonth & o.Timestamp <= todayOfCurrentMonth).ToList();
                 foreach (var workTask in workTaskResult.Where(i => (i.TimeStamp.ToString("yyyy")) == DateTime.Now.Year.ToString()))
                 {
@@ -71,10 +80,12 @@ namespace HalcyonHomeManager.BusinessLogic
         }
 
 
-        public async Task<List<ProjectHierarchy>> GetWorkItemHierarchy()
+        public async Task<List<ProjectHierarchy>> GetProjectHierarchy()
         {
+            List<ProjectHierarchy> projectHierarchies = new List<ProjectHierarchy>();
             try
             {
+
 
                 var projectResultAsync = _projectDatabase.GetProjectsAsync();
                 List<Project> projectResult = await projectResultAsync;
@@ -82,14 +93,13 @@ namespace HalcyonHomeManager.BusinessLogic
                 var workTaskResultAsync = _workTaskDatabase.GetWorkTasksAsync();
                 List<WorkTask> workTaskResult = await workTaskResultAsync;
 
-                List<ProjectHierarchy> ProjectList = new List<ProjectHierarchy>();
                 List<WorkTask> WorkTaskList = new List<WorkTask>();
-
 
                 foreach (var project in projectResult)
                 {
                     ProjectHierarchy projectHierarchy = new ProjectHierarchy();
 
+                    projectHierarchy.ProjectID = project.ID;
                     projectHierarchy.WorkTaskHierarchy = new List<WorkTask>();
                     projectHierarchy.Description = project.Description;
                     projectHierarchy.LocationCategory = project.LocationCategory;
@@ -106,10 +116,11 @@ namespace HalcyonHomeManager.BusinessLogic
                     projectHierarchy.Completed = project.Completed;
                     projectHierarchy.DeviceName = project.DeviceName;
 
-                    ProjectList.Add(projectHierarchy);
+                    projectHierarchies.Add(projectHierarchy);
                     foreach (var worktask in workTaskResult.Where(t => t.ProjectReferenceID == project.ID && t.Completed != 1))
                     {
                         WorkTask workTask = new WorkTask();
+
                         workTask.ID = worktask.ID;
                         workTask.ProjectReferenceID = worktask.ProjectReferenceID;
                         workTask.Assignment = worktask.Assignment;
@@ -132,11 +143,11 @@ namespace HalcyonHomeManager.BusinessLogic
                     }
                 }
 
-                return ProjectList;
+                return projectHierarchies;
             }
             catch (Exception ex)
             {
-                return new List<ProjectHierarchy>();
+                return null;
             }
         }
 

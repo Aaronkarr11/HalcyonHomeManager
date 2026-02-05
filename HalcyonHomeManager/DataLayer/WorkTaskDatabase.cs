@@ -8,7 +8,7 @@ namespace HalcyonHomeManager.DataLayer
 
         SQLiteAsyncConnection database;
 
-        async Task Init()
+        public async Task Init()
         {
             if (database is not null)
                 return;
@@ -32,6 +32,7 @@ namespace HalcyonHomeManager.DataLayer
         public async Task<int> SaveWorkTaskAsync(WorkTask item)
         {
             await Init();
+            item.TimeStamp = DateTime.Now;
             if (item.ID != 0)
                 return await database.UpdateAsync(item);
             else

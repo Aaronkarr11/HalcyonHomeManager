@@ -27,13 +27,13 @@ namespace HalcyonHomeManager.ViewModels
             {
                 IsBusy = true;
                 LineGraphTitle = $"Total Completed Work for {DateTime.Now.Year}";
-                PieGraphTitle = $"Work Tasks Overview for {DateTime.Now.Year}";
-                BarGraphTitle = $"Comparison of Last Month & Current Month";
+                PieGraphTitle = $"Completed Percentage for {DateTime.Now.Year}";
+                BarGraphTitle = $"Completion of Last Month vs Current Month";
                 DashBoardData = await _transactionServices.GetDashBoardData();
 
                 if (DashBoardData == null)
                 {
-                    App._alertSvc.ShowAlert("No Data!", $"There is no work to present. Go to the Work tab to create some.");
+                    App._alertSvc.ShowAlert("No Data!", $"There is no work to show here. Go to the Work tab to create some.");
                 }
                 else
                 {

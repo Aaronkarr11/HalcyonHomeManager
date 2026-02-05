@@ -1,9 +1,4 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HalcyonHomeManager.Entities
 {
@@ -15,7 +10,19 @@ namespace HalcyonHomeManager.Entities
         public string DeviceName { get; set; }
         public string Assignment { get; set; }
         public string State { get; set; }
+
+        [Ignore]
         public Microsoft.Maui.Graphics.Color StateColor { get; set; }
+
+        public string StateColorColorHex
+        {
+            
+            get => StateColor?.ToArgbHex();
+            set => StateColor = Microsoft.Maui.Graphics.Color.FromArgb(value);
+        }
+
+       // public string StateColor { get; set; }
+         //public Microsoft.Maui.Graphics.Color StateColor { get; set; }
         public string Title { get; set; }
         public string Risk { get; set; }
         public int Effort { get; set; }

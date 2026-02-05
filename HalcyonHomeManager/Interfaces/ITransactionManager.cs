@@ -16,7 +16,7 @@ namespace HalcyonHomeManager.Interfaces
         Task<List<HouseHoldMember>> GetHouseHoldList();
         Task<DashBoard> GetDashBoardData();
         Task<List<Project>> GetProjectList();
-        Task<List<ProjectHierarchy>> GetWorkItemHierarchy();
+        Task<List<ProjectHierarchy>> GetProjectHierarchy();
         Task<List<WorkTask>> GetWorkTaskPrioritiesList();
     }
 }

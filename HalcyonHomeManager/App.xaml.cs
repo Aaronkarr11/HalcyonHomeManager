@@ -20,11 +20,11 @@ public partial class App : Application
 
     public static IServiceProvider _services;
     public static IAlertService _alertSvc;
-    WorkTaskDatabase _workTaskDatabase;
-    ProjectDatabase _projectDatabase;
-    ErrorLogDatabase _errorLogDatabase;
-    HouseHoldDatabase _houseHoldDatabase;
-    RequestItemsDatabase _requestItemsDatabase;
+    //WorkTaskDatabase _workTaskDatabase;
+    //ProjectDatabase _projectDatabase;
+    //ErrorLogDatabase _errorLogDatabase;
+    //HouseHoldDatabase _houseHoldDatabase;
+    //RequestItemsDatabase _requestItemsDatabase;
 
     const int WindowWidth = 1000;
     const int WindowHeight = 800;
@@ -47,15 +47,15 @@ public partial class App : Application
         Client = new HttpClient();
         _services = provider;
         Client.Timeout = TimeSpan.FromSeconds(10);
-        var _workTaskDatabase = _services.GetService<WorkTaskDatabase>();
-        await _workTaskDatabase.Init();
+        //var _workTaskDatabase = _services.GetService<WorkTaskDatabase>();
+        //_projectDatabase = _services.GetService<ProjectDatabase>();
+        //_errorLogDatabase = _services.GetService<ErrorLogDatabase>();
+        //_houseHoldDatabase = _services.GetService<HouseHoldDatabase>();
+        //_requestItemsDatabase = _services.GetService<RequestItemsDatabase>();
 
-        _projectDatabase = _services.GetService<ProjectDatabase>();
-        _errorLogDatabase = _services.GetService<ErrorLogDatabase>();
-        _houseHoldDatabase = _services.GetService<HouseHoldDatabase>();
-        _requestItemsDatabase = _services.GetService<RequestItemsDatabase>();
+        //var appService = new TransactionManager(_workTaskDatabase, _projectDatabase, _errorLogDatabase, _houseHoldDatabase, _requestItemsDatabase);
 
-        var appService = new TransactionManager(_workTaskDatabase, _projectDatabase, _errorLogDatabase, _houseHoldDatabase, _requestItemsDatabase);
+        var appService = new TransactionManager();
         _alertSvc = _services.GetService<IAlertService>();
         DependencyService.RegisterSingleton<ITransactionManager>(appService);
         MainPage = new AppShell();

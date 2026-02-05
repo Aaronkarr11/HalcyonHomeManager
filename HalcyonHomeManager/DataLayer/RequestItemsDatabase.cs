@@ -8,7 +8,7 @@ namespace HalcyonHomeManager.DataLayer
 
         SQLiteAsyncConnection database;
 
-        async Task Init()
+        public async Task Init()
         {
             if (database is not null)
                 return;

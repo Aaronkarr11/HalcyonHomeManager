@@ -28,8 +28,7 @@ namespace HalcyonHomeManager.Entities
 
     public class ProjectHierarchy
     {
-        [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        public int ProjectID { get; set; }
         public string DeviceName { get; set; }
         public string State { get; set; }
         public string Title { get; set; }
