@@ -189,6 +189,8 @@ namespace HalcyonHomeManager.BusinessLogic
             }
         }
 
+
+
         public async void DeleteProject(Project project)
         {
             try

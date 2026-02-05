@@ -1,12 +1,16 @@
 ﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Interfaces;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
 {
     public class NewItemViewModel : BaseViewModel
     {
-        public NewItemViewModel()
+        private ITransactionManager _transactionServices;
+
+        public NewItemViewModel(ITransactionManager transactionServices)
         {
+            _transactionServices = transactionServices;
             RequestedDate = DateTime.Now;
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);

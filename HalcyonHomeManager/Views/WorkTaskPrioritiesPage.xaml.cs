@@ -1,4 +1,5 @@
-﻿using HalcyonHomeManager.ViewModels;
+﻿using HalcyonHomeManager.Interfaces;
+using HalcyonHomeManager.ViewModels;
 
 namespace HalcyonHomeManager.Views
 {
@@ -9,7 +10,8 @@ namespace HalcyonHomeManager.Views
         public WorkTaskPrioritiesPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new WorkTaskPrioritiesViewModel();
+            var service = DependencyService.Get<ITransactionManager>();
+            BindingContext = _viewModel = new WorkTaskPrioritiesViewModel(service);
         }
 
         protected override void OnAppearing()

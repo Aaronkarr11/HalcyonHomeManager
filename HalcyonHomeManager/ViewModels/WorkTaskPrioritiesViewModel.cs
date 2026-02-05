@@ -1,4 +1,5 @@
 ﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Interfaces;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -10,8 +11,10 @@ namespace HalcyonHomeManager.ViewModels
 
         public Command EditWorkTaskCommand { get; private set; }
 
-        public WorkTaskPrioritiesViewModel()
+        private ITransactionManager _transactionServices;
+        public WorkTaskPrioritiesViewModel(ITransactionManager transactionServices)
         {
+            _transactionServices = transactionServices;
             DeviceFontSize = Helpers.ReturnDeviceFontSize();
 
             EditWorkTaskCommand = new Command((workTask) =>
@@ -40,7 +43,7 @@ namespace HalcyonHomeManager.ViewModels
           IsBusy = true;
             try
             {
-               // WorkTaskList = await _transactionServices.GetWorkTaskPrioritiesList(DeviceInfo.Name.RemoveSpecialCharacters());
+                WorkTaskList = await _transactionServices.GetWorkTaskPrioritiesList();
                 IsBusy = false;
             }
             catch (Exception ex)
@@ -58,6 +61,8 @@ namespace HalcyonHomeManager.ViewModels
             {
                 WorkTask WorkTask = new WorkTask
                 {
+                    ID = workTask.ID,
+                    ProjectReferenceID = workTask.ProjectReferenceID,
                     Title = workTask.Title,
                     Assignment = workTask?.Assignment.Trim(),
                     Risk = workTask?.Risk ?? "3 - Low",
