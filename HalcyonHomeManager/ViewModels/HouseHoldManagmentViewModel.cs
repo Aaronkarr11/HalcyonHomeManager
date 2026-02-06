@@ -1,4 +1,5 @@
 ﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.Models;
 using Newtonsoft.Json;
 
@@ -18,8 +19,11 @@ namespace HalcyonHomeManager.ViewModels
         public Command EditCommand { get; }
         public Command ExecuteNewMemberCommand { get; }
 
-        public HouseHoldManagmentViewModel()
+        private ITransactionManager _transactionServices;
+
+        public HouseHoldManagmentViewModel(ITransactionManager transactionServices)
         {
+            _transactionServices = transactionServices;
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             OnRefreshCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
@@ -59,7 +63,7 @@ namespace HalcyonHomeManager.ViewModels
 
             try
             {
-                HouseHoldList = new List<HouseHoldMember>();
+                HouseHoldList = await _transactionServices.GetHouseHoldMembers();
                 if (HouseHoldList.Count() == 0)
                 {
                     ShowMessage = true;
@@ -83,7 +87,7 @@ namespace HalcyonHomeManager.ViewModels
 
             try
             {
-                HouseHoldList = new List<HouseHoldMember>();
+                HouseHoldList = await _transactionServices.GetHouseHoldMembers();
                 if (HouseHoldList.Count() == 0 || HouseHoldList == null)
                 {
                     ShowMessage = true;
@@ -92,6 +96,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "OnAppearing");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -103,6 +108,7 @@ namespace HalcyonHomeManager.ViewModels
                 var houseHold = (HouseHoldMember)sender;
                 HouseHoldMember sentHouseHold = new HouseHoldMember
                 {
+                    ID = houseHold.ID,
                     Name = houseHold.Name,
                     Email = houseHold.Email,
                     PhoneNumber = houseHold.PhoneNumber.RemoveSpecialCharacters()
@@ -116,6 +122,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "ExecuteEditHouseHoldCommand");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -130,11 +137,12 @@ namespace HalcyonHomeManager.ViewModels
                     try
                     {
                         HouseHoldMember member = (HouseHoldMember)obj;
-                        HouseHoldList = new List<HouseHoldMember>();
+                        _transactionServices.DeleteHouseHoldMember(member);
                     }
                     catch (Exception ex)
                     {
                         ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldManagmentViewModel", "OnDelete");
+                        _transactionServices.CreateNewError(error);
                         App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                     }
                 }

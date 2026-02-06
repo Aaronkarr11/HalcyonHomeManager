@@ -1,4 +1,5 @@
 ﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Interfaces;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -6,9 +7,11 @@ namespace HalcyonHomeManager.ViewModels
     [QueryProperty(nameof(Member), nameof(Member))]
     public class HouseHoldMemberViewModel : BaseViewModel
     {
+        private ITransactionManager _transactionServices;
 
-        public HouseHoldMemberViewModel()
+        public HouseHoldMemberViewModel(ITransactionManager transactionServices)
         {
+            _transactionServices = transactionServices;
             CancelCommand = new Command(OnCancel);
 
             SaveCommand = new Command((obj) =>
@@ -41,7 +44,7 @@ namespace HalcyonHomeManager.ViewModels
             try
             {
                 SelectedHouseHoldMember = mem;
-                if (true)
+                if (mem.ID == 0)
                 {
                     PageName = $"Create a New HouseHold Member";
                     ShowDeleteButton = false;
@@ -55,6 +58,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "HouseHoldMemberViewModel", "LoadItemId");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -97,7 +101,8 @@ namespace HalcyonHomeManager.ViewModels
                 HouseHoldMemberViewModel rawHouseHoldViewModel = (HouseHoldMemberViewModel)obj;
                 HouseHoldMember houseHold = rawHouseHoldViewModel.SelectedHouseHoldMember;
                 if (Helpers.IsPhoneValid(houseHold))
-                {       
+                {
+                    _transactionServices.CreateOrUpdateHouseHoldMember(houseHold);
                     await Shell.Current.GoToAsync("..");
                 }
                 else

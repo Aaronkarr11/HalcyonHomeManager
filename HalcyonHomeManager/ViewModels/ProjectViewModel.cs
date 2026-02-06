@@ -263,7 +263,7 @@ namespace HalcyonHomeManager.ViewModels
                         Project project = rawProjectViewModel.SelectedProject;
                         project.Completed = 1;
                         project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
-                        _transactionServices.CreateProject(project);
+                        _transactionServices.CreateOrUpdateProject(project);
                         await Shell.Current.GoToAsync("..");
                     }
                     catch (Exception ex)
@@ -284,7 +284,7 @@ namespace HalcyonHomeManager.ViewModels
                 Project project = rawProjectViewModel.SelectedProject;
                 project.Completed = 0;
                 project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
-                _transactionServices.CreateProject(project);
+                _transactionServices.CreateOrUpdateProject(project);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)

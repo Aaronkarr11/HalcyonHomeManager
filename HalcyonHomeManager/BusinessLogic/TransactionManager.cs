@@ -151,6 +151,18 @@ namespace HalcyonHomeManager.BusinessLogic
             }
         }
 
+        
+        public async void DeleteHouseHoldMember(HouseHoldMember household)
+        {
+            try
+            {
+                await _houseHoldDatabase.DeleteHouseHoldAsync(household);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
         public async void DeleteWorkTask(WorkTask workTask)
         {
@@ -160,11 +172,24 @@ namespace HalcyonHomeManager.BusinessLogic
             }
             catch (Exception ex)
             {
-
+                throw;
             }
         }
 
-        public async void CreateWorkTask(WorkTask workTask)
+
+        public async void DeleteRequestItem(RequestItems item)
+        {
+            try
+            {
+                await _requestItemsDatabase.DeleteRequestItemAsync(item);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async void CreateOrUpdateWorkTask(WorkTask workTask)
         {
             try
             {
@@ -172,11 +197,11 @@ namespace HalcyonHomeManager.BusinessLogic
             }
             catch (Exception ex)
             {
-
+                throw;
             }
         }
 
-        public async void CreateProject(Project project)
+        public async void CreateOrUpdateProject(Project project)
         {
             try
             {
@@ -185,11 +210,36 @@ namespace HalcyonHomeManager.BusinessLogic
             }
             catch (Exception ex)
             {
-
+                throw;
             }
         }
 
+       
 
+
+        public async void CreateOrUpdateRequestItem(RequestItems item)
+        {
+            try
+            {
+                await _requestItemsDatabase.SaveRequestItemAsync(item);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async void CreateOrUpdateHouseHoldMember(HouseHoldMember member)
+        {
+            try
+            {
+                await _houseHoldDatabase.SaveHouseHoldAsync(member);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
         public async void DeleteProject(Project project)
         {
@@ -199,7 +249,7 @@ namespace HalcyonHomeManager.BusinessLogic
             }
             catch (Exception ex)
             {
-
+                throw;
             }
         }
 
@@ -211,11 +261,41 @@ namespace HalcyonHomeManager.BusinessLogic
             }
             catch (Exception ex)
             {
-
+                throw;
             }
         }
 
-        public async Task<List<HouseHoldMember>> GetHouseHoldList()
+
+        public async Task<List<ErrorLog>> GetErrorLogs()
+        {
+            try
+            {
+                var requestItemsAsync = _errorLogDatabase.GetErrorLogsAsync();
+                List<ErrorLog> houseHoldResult = await requestItemsAsync;
+                return houseHoldResult;
+            }
+            catch (Exception)
+            {
+                return new List<ErrorLog>();
+            }
+        }
+
+
+        public async Task<List<RequestItems>> GetRequestItems()
+        {
+            try
+            {
+                var requestItemsAsync = _requestItemsDatabase.GetRequestItemsAsync();
+                List<RequestItems> houseHoldResult = await requestItemsAsync;
+                return houseHoldResult;
+            }
+            catch (Exception)
+            {
+                return new List<RequestItems>();
+            }
+        }
+
+        public async Task<List<HouseHoldMember>> GetHouseHoldMembers()
         {
             try
             {

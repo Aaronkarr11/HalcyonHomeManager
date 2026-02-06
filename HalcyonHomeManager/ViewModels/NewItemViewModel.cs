@@ -53,10 +53,9 @@ namespace HalcyonHomeManager.ViewModels
                 RequestItems requestItemRequest = new RequestItems();
                 requestItemRequest.DesiredDate = RequestedDate;
                 requestItemRequest.Title = Name;
-                requestItemRequest.IsFulfilled = 0;
                 requestItemRequest.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
 
-                //await _transactionServices.CreateRequestItem(requestItemRequest);
+                _transactionServices.CreateOrUpdateRequestItem(requestItemRequest);
 
                 // This will pop the current page off the navigation stack
                 await Shell.Current.GoToAsync("..");
@@ -64,6 +63,7 @@ namespace HalcyonHomeManager.ViewModels
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "NewItemViewModel", "OnSave");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }

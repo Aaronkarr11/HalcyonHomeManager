@@ -1,4 +1,5 @@
-﻿using HalcyonHomeManager.ViewModels;
+﻿using HalcyonHomeManager.Interfaces;
+using HalcyonHomeManager.ViewModels;
 
 namespace HalcyonHomeManager.Views
 {
@@ -8,7 +9,8 @@ namespace HalcyonHomeManager.Views
         public HouseHoldManagmentPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new HouseHoldManagmentViewModel();
+            var service = DependencyService.Get<ITransactionManager>();
+            BindingContext = _viewModel = new HouseHoldManagmentViewModel(service);
         }
 
         protected override void OnAppearing()

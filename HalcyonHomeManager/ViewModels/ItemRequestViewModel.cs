@@ -1,4 +1,5 @@
 ﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.Models;
 using HalcyonHomeManager.Views;
 using Newtonsoft.Json;
@@ -21,9 +22,11 @@ namespace HalcyonHomeManager.ViewModels
 
         public ICommand CompleteCommand { get; private set; }
 
-        public ItemRequestViewModel()
-        {
+        private ITransactionManager _transactionServices;
 
+        public ItemRequestViewModel(ITransactionManager transactionServices)
+        {
+            _transactionServices = transactionServices;
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             OnRefreshCommand = new Command(async () => await ExecuteLoadItemsCommand());
             AddItemCommand = new Command(OnAddItem);
@@ -45,14 +48,14 @@ namespace HalcyonHomeManager.ViewModels
                 RequestItems request = new RequestItems();
 
                 request.DesiredDate = item.DesiredDate;
-                request.IsFulfilled = 1;
                 request.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
-               // await _transactionServices.CreateRequestItem(request);
+                _transactionServices.DeleteRequestItem(request);
                 await ExecuteLoadItemsCommand();
             }
             catch (Exception ex)
             {
                 ErrorLog error = Helpers.ReturnErrorMessage(ex, "ItemRequestViewModel", "OnItemChecked");
+                _transactionServices.CreateNewError(error);
                 App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
             }
         }
@@ -63,7 +66,7 @@ namespace HalcyonHomeManager.ViewModels
 
             try
             {
-              //  RequestItems = await _transactionServices.GetRequestItems(DeviceInfo.Name.RemoveSpecialCharacters());
+              RequestItems = await _transactionServices.GetRequestItems();
             }
             catch (Exception ex)
             {
@@ -77,7 +80,7 @@ namespace HalcyonHomeManager.ViewModels
 
         public async void OnAppearing()
         {
-           // RequestItems = await _transactionServices.GetRequestItems(DeviceInfo.Name.RemoveSpecialCharacters());
+            RequestItems = await _transactionServices.GetRequestItems();
             IsBusy = true;
         }
 

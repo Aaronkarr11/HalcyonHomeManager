@@ -1,3 +1,4 @@
+using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.ViewModels;
 
 namespace HalcyonHomeManager.Views
@@ -9,7 +10,8 @@ namespace HalcyonHomeManager.Views
         public ItemRequestPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new ItemRequestViewModel();
+            var service = DependencyService.Get<ITransactionManager>();
+            BindingContext = _viewModel = new ItemRequestViewModel(service);
         }
 
         protected override void OnAppearing()

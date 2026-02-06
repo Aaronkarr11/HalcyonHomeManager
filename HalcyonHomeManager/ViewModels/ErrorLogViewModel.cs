@@ -1,4 +1,5 @@
 ﻿using HalcyonHomeManager.Entities;
+using HalcyonHomeManager.Interfaces;
 using Newtonsoft.Json;
 
 namespace HalcyonHomeManager.ViewModels
@@ -9,8 +10,11 @@ namespace HalcyonHomeManager.ViewModels
 
         public Command ExecuteNewMemberCommand { get; }
 
-        public ErrorLogViewModel()
+        private ITransactionManager _transactionServices;
+
+        public ErrorLogViewModel(ITransactionManager transactionServices)
         {
+            _transactionServices = transactionServices;
             ExecuteNewMemberCommand = new Command(() =>
             {
                 ExecuteNewMember();
@@ -26,7 +30,7 @@ namespace HalcyonHomeManager.ViewModels
 
             try
             {
-              //  ErrorLog model = new ErrorLog();
+                ErrorLogList = await _transactionServices.GetErrorLogs();
 
                 if (ErrorLogList.Count == 0)
                 {

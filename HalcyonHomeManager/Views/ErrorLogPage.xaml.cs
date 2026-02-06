@@ -1,3 +1,4 @@
+using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.ViewModels;
 
 namespace HalcyonHomeManager.Views;
@@ -9,7 +10,8 @@ public partial class ErrorLogPage : ContentPage
     public ErrorLogPage()
     {
         InitializeComponent();
-        BindingContext = _viewModel = new ErrorLogViewModel();
+        var service = DependencyService.Get<ITransactionManager>();
+        BindingContext = _viewModel = new ErrorLogViewModel(service);
     }
 
     protected override async void OnAppearing()

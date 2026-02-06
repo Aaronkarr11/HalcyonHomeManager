@@ -11,6 +11,5 @@ namespace HalcyonHomeManager.Entities
         public string ReasonDescription { get; set; }
         public DateTime? DesiredDate { get; set; }
         public string DesiredDateDisplay { get; set; }
-        public int IsFulfilled { get; set; }
     }
 }

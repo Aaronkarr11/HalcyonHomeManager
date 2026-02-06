@@ -1,5 +1,6 @@
 ﻿using HalcyonHomeManager.Entities;
 using HalcyonHomeManager.Interfaces;
+using System.Collections.Generic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalcyonHomeManager.ViewModels
@@ -174,7 +175,7 @@ namespace HalcyonHomeManager.ViewModels
             try
             {
                 List<HouseHoldMember> RawHouseHoldMembersList;
-                RawHouseHoldMembersList = await _transactionServices.GetHouseHoldList();
+                RawHouseHoldMembersList = await _transactionServices.GetHouseHoldMembers();
                 HouseHoldMembersList = RawHouseHoldMembersList.ToList();
                 if (RawHouseHoldMembersList.Count() != 0)
                 {
@@ -250,7 +251,7 @@ namespace HalcyonHomeManager.ViewModels
                         WorkTask workTask = rawWorkTaskViewModel.SelectedWorkTask;
                         workTask.Completed = 0;
                         workTask.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
-                        _transactionServices.CreateWorkTask(workTask);
+                        _transactionServices.CreateOrUpdateWorkTask(workTask);
                         await Shell.Current.GoToAsync("..");
                     }
                     catch (Exception ex)
@@ -275,7 +276,7 @@ namespace HalcyonHomeManager.ViewModels
                         WorkTask workTask = rawWorkTaskViewModel.SelectedWorkTask;
                         workTask.Completed = 1;
                         workTask.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
-                        _transactionServices.CreateWorkTask(workTask);
+                        _transactionServices.CreateOrUpdateWorkTask(workTask);
                         await Shell.Current.GoToAsync("..");
                     }
                     catch (Exception ex)
@@ -325,7 +326,7 @@ namespace HalcyonHomeManager.ViewModels
                 }
                 workTask.Completed = 0;
                 workTask.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
-                _transactionServices.CreateWorkTask(workTask);
+                _transactionServices.CreateOrUpdateWorkTask(workTask);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
