@@ -45,11 +45,10 @@ namespace HalcyonHomeManager.ViewModels
             try
             {
                 RequestItems item = (RequestItems)obj;
-                RequestItems request = new RequestItems();
 
-                request.DesiredDate = item.DesiredDate;
-                request.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
-                _transactionServices.DeleteRequestItem(request);
+                item.DesiredDate = item.DesiredDate;
+                item.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
+                _transactionServices.DeleteRequestItem(item);
                 await ExecuteLoadItemsCommand();
             }
             catch (Exception ex)

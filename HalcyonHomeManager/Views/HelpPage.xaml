@@ -20,11 +20,25 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0">
+                            <Label FontSize="Large" FontAttributes="Bold">
+                                Disclaimer!!
+                            </Label>
+                            <Label FontSize="Medium" FontAttributes="Bold">
+                                If this application is uninstalled from the device, all data is deleted. There is currently no way of backing information.
+                            </Label>
+                        </StackLayout>
+                        <BoxView Grid.Row="1"
+                             Grid.ColumnSpan="2"
+                             BackgroundColor="Black"
+                             HeightRequest="2"
+                             HorizontalOptions="Fill" />
+                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                             <Label FontSize="Large" FontAttributes="Bold">
                                 Overview
                             </Label>

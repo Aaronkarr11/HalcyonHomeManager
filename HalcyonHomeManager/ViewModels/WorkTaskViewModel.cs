@@ -266,7 +266,7 @@ namespace HalcyonHomeManager.ViewModels
 
         private void OnComplete(object obj)
         {
-            App._alertSvc.ShowConfirmation("Warning", "Are you sure you want to complete this worktask?", (async result =>
+            App._alertSvc.ShowConfirmation("Warning", "Are you sure you want to complete this work task?", (async result =>
             {
                 if (result)
                 {
