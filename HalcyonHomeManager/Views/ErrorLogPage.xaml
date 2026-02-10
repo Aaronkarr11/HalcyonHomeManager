@@ -11,10 +11,10 @@
 
     <StackLayout>
         <StackLayout Spacing="4" Padding="15" BackgroundColor="#40568d">
-            <Label FontSize="Large" TextColor="White" Text="{Binding ErrorPageTitle}"></Label>
+            <Label FontSize="Large" HorizontalTextAlignment="Center" TextColor="White" Text="{Binding ErrorPageTitle}"></Label>
         </StackLayout>
         <ScrollView Padding="15" VerticalOptions="FillAndExpand">
-            <Frame CornerRadius="10"  Margin="5, 5, 5, 5" HasShadow="True" BackgroundColor="#ccd5f0">
+            <Border Stroke="Gray" StrokeShape="RoundRectangle 10" Margin="5, 5, 5, 5" BackgroundColor="#ccd5f0">
                 <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  BindableLayout.ItemsSource="{Binding ErrorLogList}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
@@ -41,7 +41,7 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
-            </Frame>
+            </Border>
         </ScrollView>
     </StackLayout>
 </ContentPage>

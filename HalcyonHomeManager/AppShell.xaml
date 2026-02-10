@@ -41,7 +41,7 @@
             <Tab Title="Items" Icon="icon_feed.png" IsVisible="True">
                 <ShellContent Route="ItemRequestPage" ContentTemplate="{DataTemplate views:ItemRequestPage}" />
             </Tab>
-        <Tab Title="Settings" Icon="icon_gear.png" IsVisible="True">
+        <Tab Title="Settings/Tools" Icon="icon_gear.png" IsVisible="True">
             <ShellContent Route="ConfigurationPage" ContentTemplate="{DataTemplate views:ConfigurationPage}" />
         </Tab>
     </TabBar>

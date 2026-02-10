@@ -21,16 +21,17 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0">
-                            <Label FontSize="Large" FontAttributes="Bold">
+                        <StackLayout Orientation="Vertical" BackgroundColor="#e8eefc" MinimumWidthRequest="100" Padding="0,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0">
+                            <Label FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center">
                                 Disclaimer!!
                             </Label>
-                            <Label FontSize="Medium" FontAttributes="Bold">
-                                If this application is uninstalled from the device, all data is deleted. There is currently no way of backing information.
+                            <Label FontSize="Small" Margin="0,0,0,0" Padding="5,0,5,0" HorizontalTextAlignment="Center"  FontAttributes="Bold">
+                                All data is stored internally on the device. If this application is uninstalled from the device, all data is deleted. There is currently no way of backing information. Use/Uninstall at your own risk.
                             </Label>
                         </StackLayout>
                         <BoxView Grid.Row="1"
@@ -38,33 +39,30 @@
                              BackgroundColor="Black"
                              HeightRequest="2"
                              HorizontalOptions="Fill" />
-                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-                            <Label FontSize="Large" FontAttributes="Bold">
+                        <StackLayout Orientation="Vertical"  MinimumWidthRequest="100" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+                            <Label FontSize="Medium"  FontAttributes="Bold">
                                 Overview
                             </Label>
                             <Label FontSize="Small">
-                                Use this tool to view assigned house work, create/complete house work, and much more. Use Household Management to manage members of the house. They can then be assigned to Work Tasks.
-                            </Label>
-                            <Label FontSize="Small">
-                                Work Items are a general term to describe any item/level of work. Not to be confused with "Work Task!" Below are the various Work Items.
+                                This application’s primary purpose is to track tasks, chores, and work in or around the home through projects (parent) and (child) work tasks. See respected summaries in the following sections. Completing work shows a sense accomplishment which can be seen on the home screen’s dashboard.
                             </Label>
                         </StackLayout>
-                        <BoxView Grid.Row="1"
+                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1">
+                            <Label FontSize="Small">
+                                The application also allows the user to track needed household items (essentially a shopping list). Tools such as household member creation can be found in the Settings/Tools tab.
+                            </Label>
+                        </StackLayout>
+                        <BoxView Grid.Row="4"
                              Grid.ColumnSpan="2"
                              BackgroundColor="Black"
                              HeightRequest="2"
                              HorizontalOptions="Fill" />
-                        <BoxView Grid.Row="3"
-                             Grid.ColumnSpan="2"
-                             BackgroundColor="Black"
-                             HeightRequest="2"
-                             HorizontalOptions="Fill" />
-                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
                             <Label FontSize="Medium" FontAttributes="Bold">
                                 Project
                             </Label>
                             <Label FontSize="Small" Margin="0,0,0,5">
-                                A temporary, mid-level work item. It acts as a mid-level parent for compartmentalizing child Work Tasks. Think of it as a way to group related work items to meet an end goal (e.g. "New Garden Bed"). It can also be used as a temporary "bucket" of work items. For example, there could be a project called "Fall Clean-up 2021" that would contain continuously added Work Tasks until it is completed by year end.
+                                A top-level work item. It acts as the parent for compartmentalizing child Work Tasks. Think of it as a way to group related work items to meet an end goal (e.g. "New Garden Bed"). It can also be used as a temporary "bucket" of work items. For example, there could be a project called "Fall Clean-up 2021" that would contain continuously added Work Tasks until it is completed by year end.
                             </Label>
                             <Label FontAttributes="Bold" FontSize="Small">
                                 Title:
@@ -115,12 +113,12 @@
                                 How serious is the Project? How greatly does the Project affect the house and household?
                             </Label>
                         </StackLayout>
-                        <BoxView Grid.Row="5"
+                        <BoxView Grid.Row="6"
                              Grid.ColumnSpan="2"
                              BackgroundColor="Black"
                              HeightRequest="2"
                              HorizontalOptions="Fill" />
-                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2">
+                        <StackLayout Orientation="Vertical" MinimumWidthRequest="100" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2">
                             <Label FontSize="Medium" FontAttributes="Bold">
                                 Work Task
                             </Label>
