@@ -53,7 +53,7 @@ namespace HalcyonHomeManager.BusinessLogic
                 DateTime todayOfLastMonth = Convert.ToDateTime(DateTime.Now.AddMonths(-1).LastDayInThisMonth());
 
                List<WorkTask> workTaskList = new List<WorkTask>();
-                string pog = workTaskResult.FirstOrDefault().TimeStamp.ToString("yyyy");
+               // string pog = workTaskResult.FirstOrDefault().TimeStamp.ToString("yyyy");
                 // newResults = workTaskResult.Where(o => o.Timestamp >= todayOfLastMonth & o.Timestamp <= todayOfCurrentMonth).ToList();
                 foreach (var workTask in workTaskResult.Where(i => (i.TimeStamp.ToString("yyyy")) == DateTime.Now.Year.ToString()))
                 {
