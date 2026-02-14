@@ -34,7 +34,7 @@ namespace HalcyonHomeManager.ViewModels
 
                 if (ErrorLogList.Count == 0)
                 {
-                    ErrorPageTitle = "No Errors Found or Logged!";
+                    ErrorPageTitle = "No Errors Logged!";
                 }
                 else
                 {

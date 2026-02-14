@@ -34,6 +34,7 @@
         <StackLayout  BackgroundColor="White" Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
             <Label FontSize="Medium"  FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding BarGraphTitle}"  BackgroundColor="White"></Label>
             <lvc:CartesianChart VerticalOptions="FillAndExpand"  HorizontalOptions="FillAndExpand" Series="{Binding BarSeries}"
+                  x:Name="BarChart"
                   LegendPosition="Bottom"
                   XAxes="{Binding BarXAxes}"
                   YAxes="{Binding BarYAxes}">
@@ -45,10 +46,12 @@
         <StackLayout BackgroundColor="White" Grid.Row="2">
             <Label FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding PieGraphTitle}"  BackgroundColor="White"></Label>
             <lvc:PieChart  VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Series="{Binding Series}" 
+                      x:Name="PieChart"
                       LegendPosition="Right"
                       TooltipPosition="Right"
                       />
         </StackLayout>
+        
         <StackLayout BackgroundColor="White" Grid.Row="3">
             <Label FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding LineGraphTitle}"  BackgroundColor="White"></Label>
             <lvc:CartesianChart VerticalOptions="FillAndExpand" HorizontalOptions="Fill" 

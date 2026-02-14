@@ -1,10 +1,10 @@
 ﻿using HalcyonHomeManager.Entities;
 using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.Models;
+using HalcyonHomeManager.Views;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using Newtonsoft.Json;
 using SkiaSharp;
 
 namespace HalcyonHomeManager.ViewModels
@@ -81,29 +81,13 @@ namespace HalcyonHomeManager.ViewModels
 
             };
 
-                    var data = new double[] { DashBoardData.percentageData.percentUnCompleted, DashBoardData.percentageData.percentCompleted };
-
+                    var data = new double[] { DashBoardData.percentageData.percentUnCompleted, DashBoardData.percentageData.percentCompleted }; 
                     int counter = 1;
-                    Series = data.AsLiveChartsPieSeries((value, series) =>
-                    {
-                        if (counter == 1)
-                        {
-                            series.Name = $"Uncompleted Work Tasks: {value}%";
-                            series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30));
-                            series.Fill = new SolidColorPaint(SKColors.Yellow);
-                            series.DataLabelsSize = 0;
-                            series.TooltipLabelFormatter = p => $"{p.PrimaryValue} / {p.StackedValue!.Total} ({p.StackedValue.Share:P2})";
-                        }
-                        else if (counter == 2)
-                        {
-                            series.Name = $"Completed Work Tasks: {value}%";
-                            series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30));
-                            series.Fill = new SolidColorPaint(SKColors.Green);
-                            series.DataLabelsSize = 0;
-                            series.TooltipLabelFormatter = p => $"{p.PrimaryValue} / {p.StackedValue!.Total} ({p.StackedValue.Share:P2})";
-                        }
-                        counter++;
-                    });
+                    Series = data.AsLiveChartsPieSeries((value, series) => { if (counter == 1) { series.Name = $"Uncompleted Work Tasks: {value}%"; 
+                    series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30)); 
+                    series.Fill = new SolidColorPaint(SKColors.Yellow); series.DataLabelsSize = 0; 
+                    series.TooltipLabelFormatter = p => $"{p.PrimaryValue} / {p.StackedValue!.Total} ({p.StackedValue.Share:P2})"; } else if (counter == 2) { series.Name = $"Completed Work Tasks: {value}%"; series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30)); series.Fill = new SolidColorPaint(SKColors.Green); series.DataLabelsSize = 0; series.TooltipLabelFormatter = p => $"{p.PrimaryValue} / {p.StackedValue!.Total} ({p.StackedValue.Share:P2})"; } counter++; }).ToArray();
+
 
                     List<string> labels = new List<string>();
 
@@ -145,6 +129,7 @@ namespace HalcyonHomeManager.ViewModels
                      }
                  };
                 }
+
 
 
 
