@@ -203,25 +203,24 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout BackgroundColor="{StaticResource Primary}" Spacing="20" Padding="15" IsVisible="{Binding ShowPicker, Mode=TwoWay}">
-                <Picker x:Name="MyPicker" TextColor="Black" BackgroundColor="White" TitleColor="White" Title="Select an Operation"  ItemsSource="{Binding ProjectList}" ItemDisplayBinding="{Binding Title}" >
+        <Grid RowDefinitions="Auto,*">
+            <!-- Header / Picker row -->
+            <StackLayout Grid.Row="0" BackgroundColor="{StaticResource Primary}" Spacing="20" Padding="15" IsVisible="{Binding ShowPicker, Mode=TwoWay}">
+                <Picker x:Name="MyPicker" TextColor="Black" BackgroundColor="White" TitleColor="White" Title="Select an Operation" ItemsSource="{Binding ProjectList}" ItemDisplayBinding="{Binding Title}">
                     <Picker.Behaviors>
-                        <toolkit:EventToCommandBehavior
-                            EventName="SelectedIndexChanged"
-                            Command="{Binding GetSelectedProjectsCommand}"
-                            CommandParameter="{Reference MyPicker}" />
+                        <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged" Command="{Binding GetSelectedProjectsCommand}" CommandParameter="{Reference MyPicker}" />
                     </Picker.Behaviors>
                 </Picker>
             </StackLayout>
 
 
-            <ScrollView>
-                <StackLayout>
-                    <StackLayout BindableLayout.ItemsSource="{Binding ProjectHierarchy}">
+            <!-- Scrollable content row -->
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout>
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding ProjectHierarchy}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Border Padding="10"  Margin="10, 5, 5, 5" BackgroundColor="{StaticResource Tertiary}">
+                                <Border Padding="10" Margin="10,5,5,5" BackgroundColor="{StaticResource Tertiary}">
                                     <StackLayout x:DataType="model:ProjectHierarchy">
                                         <Grid Margin="0,0,0,0">
                                             <Grid.ColumnDefinitions>
@@ -239,8 +238,8 @@
                                                 <RowDefinition />
                                                 <RowDefinition />
                                                 <RowDefinition />
-                                               
-                                            
+
+
                                             </Grid.RowDefinitions>
 
                                             <Label Grid.Row="0" Grid.RowSpan="2" Margin="0,0,0,0" TextColor="White" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Title}" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="Large" />
@@ -250,32 +249,32 @@
                                             <Label Grid.Row="4" Grid.Column="0" TextColor="White"  Grid.RowSpan="2" Grid.ColumnSpan="3" Text="Target Date:" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="Default" />
                                             <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" TextColor="White" Margin="0,0,10,20" Text="{Binding DisplayTargetDate}" TextDecorations="Underline" FontAttributes="Bold" FontSize="Default" />
                                             <Button
-                                                                    Grid.Row="5" 
-                                                                    Grid.RowSpan="4" 
-                                                                    Grid.Column="0"
-                                                                    HeightRequest="40"
-                                                                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=DeviceButtonWidth}"
-                                                                    FontSize="Small"
-                                                                    Text="Edit Project"
-                                                                    HorizontalOptions="Start"
-                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=EditProjectCommand}"
-                                                                    CommandParameter="{Binding .}">
+                                                           Grid.Row="5" 
+                                                           Grid.RowSpan="4" 
+                                                           Grid.Column="0"
+                                                           HeightRequest="40"
+                                                           WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=DeviceButtonWidth}"
+                                                           FontSize="Small"
+                                                           Text="Edit Project"
+                                                           HorizontalOptions="Start"
+                                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=EditProjectCommand}"
+                                                           CommandParameter="{Binding .}">
                                             </Button>
                                             <Button
-                                                                    BackgroundColor="{StaticResource ButtonEdit}"
-                                                                    Grid.Row="5" 
-                                                                    Grid.RowSpan="4"
-                                                                    HeightRequest="40"
-                                                                    Grid.Column="5"
-                                                                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=DeviceButtonWidth}"
-                                                                    Grid.ColumnSpan="2"
-                                                                    Text="New Work Task"
-                                                                    FontSize="Small"
-                                                                    HorizontalOptions="End"
-                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=NewWorkTaskCommand}"
-                                                                    CommandParameter="{Binding .}">
+                                                           BackgroundColor="{StaticResource ButtonEdit}"
+                                                           Grid.Row="5" 
+                                                           Grid.RowSpan="4"
+                                                           HeightRequest="40"
+                                                           Grid.Column="5"
+                                                           WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=DeviceButtonWidth}"
+                                                           Grid.ColumnSpan="2"
+                                                           Text="New Work Task"
+                                                           FontSize="Small"
+                                                           HorizontalOptions="End"
+                                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=NewWorkTaskCommand}"
+                                                           CommandParameter="{Binding .}">
                                             </Button>
-                                           
+
 
                                         </Grid>
 
@@ -287,16 +286,16 @@
                                                     <StackLayout x:DataType="model:WorkTask" Orientation="Vertical" HorizontalOptions="FillAndExpand">
 
                                                         <controls:WorkTaskCard BorderColor="pink"
-                                                                WorkTaskTitle="{Binding Title}"
-                                                                WorkTaskDescription="{Binding Description}"
-                                                                WorkTaskStartDate="{Binding DisplayStartDate}"
-                                                                WorkTaskTargetDate="{Binding DisplayTargetDate}"
-                                                                WorkTaskState="{Binding State}"
-                                                                WorkTaskColor="{Binding StateColor}"
-                                                                CardColor="Azure"
-                                                                EditCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=EditWorkTaskCommand}"
-                                                                EditCommandParameter="{Binding .}"
-                                                                ControlTemplate="{StaticResource WorkTaskControlTemplate}" />
+                                                       WorkTaskTitle="{Binding Title}"
+                                                       WorkTaskDescription="{Binding Description}"
+                                                       WorkTaskStartDate="{Binding DisplayStartDate}"
+                                                       WorkTaskTargetDate="{Binding DisplayTargetDate}"
+                                                       WorkTaskState="{Binding State}"
+                                                       WorkTaskColor="{Binding StateColor}"
+                                                       CardColor="Azure"
+                                                       EditCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=EditWorkTaskCommand}"
+                                                       EditCommandParameter="{Binding .}"
+                                                       ControlTemplate="{StaticResource WorkTaskControlTemplate}" />
 
                                                     </StackLayout>
                                                 </DataTemplate>
@@ -309,11 +308,9 @@
                                 </Border>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
-                    </StackLayout>
-                </StackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
             </ScrollView>
-
-
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

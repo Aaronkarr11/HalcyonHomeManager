@@ -41,7 +41,7 @@
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Margin="0,5,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Label FontAttributes="Bold" Text="Description" FontSize="{Binding DeviceFontSize}" />
-                                <Editor AutoSize="TextChanges"   MaxLength="75" Text="{Binding SelectedWorkTask.Description, Mode=TwoWay}" FontSize="{Binding DeviceFontSize}" />
+                                <Editor AutoSize="TextChanges"  HeightRequest="65"   MaxLength="75" Text="{Binding SelectedWorkTask.Description, Mode=TwoWay}" FontSize="{Binding DeviceFontSize}" />
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Margin="0,5,0,0" Grid.Row="2" Grid.RowSpan="2"  Grid.Column="0">
                                 <Label FontAttributes="Bold" Text="Assignment"  FontSize="{Binding DeviceFontSize}" />
