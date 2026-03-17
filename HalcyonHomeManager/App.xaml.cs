@@ -4,12 +4,16 @@ using Microsoft.UI.Windowing;
 using Windows.Graphics;
 #endif
 using HalcyonHomeManager.BusinessLogic;
-using HalcyonHomeManager.DataLayer;
+using HalcyonHomeManager.Charting;
 using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.Models;
 using HalcyonHomeManager.Services;
 using LiveChartsCore;
+using LiveChartsCore.Kernel;              // ChartPoint
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Maui;
+
+
 
 
 namespace HalcyonHomeManager;
@@ -60,17 +64,9 @@ public partial class App : Application
         DependencyService.RegisterSingleton<ITransactionManager>(appService);
         MainPage = new AppShell();
 
-        LiveCharts.Configure(config =>
-        config
-        .AddSkiaSharp()
-        .AddDefaultMappers()
-        .AddLightTheme()
-        .HasMap<LineGraphModelItem>((completed, point) =>
-        {
-            // use the city Population property as the primary value
-            point.PrimaryValue = (int)completed.TotalCompleted;
-            // and the index of the city in our cities array as the secondary value
-            point.SecondaryValue = point.Context.Index;
-        }));
+        LiveChartsConfig.Configure();
+
+
+        MainPage = new AppShell();
     }
 }

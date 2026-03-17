@@ -316,19 +316,25 @@ namespace HalcyonHomeManager.BusinessLogic
             {
                 var projectResultAsync = _projectDatabase.GetProjectsAsync();
                 List<Project> projectResult = await projectResultAsync;
-
-                Project emptyProject = new Project();
-                emptyProject.Title = "Create New";
-                emptyProject.ID = 0;
+                Project emptyProject = new Project
+                {
+                    Title = "Create New",
+                    ID = 0,
+                    ConvertedDateTimeStamp = 0,
+                    CreatedDate = DateTime.Now.AddYears(-150)
+                };
                 projectResult.Add(emptyProject);
                 return projectResult;
             }
             catch (Exception ex)
             {
                 List<Project> emptyProjectList = new List<Project>();
-                Project model = new Project();
-                model.Title = "Create New";
-                model.ID = 0;
+                Project model = new Project
+                {
+                    Title = "Create New",
+                    ID = 0
+                };
+
                 emptyProjectList.Add(model);
                 return emptyProjectList;
             }

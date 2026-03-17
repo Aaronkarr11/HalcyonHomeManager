@@ -23,9 +23,13 @@ namespace HalcyonHomeManager.Models
 
         public class LineGraphModelItem
         {
-            public int TotalCompleted { get; set; }
-            public string Name { get; set; }
-        }
+        public int TotalCompleted { get; set; }
+        public string Name { get; set; }
+
+        // LiveCharts now expects you to expose the values directly:
+        public double Primary => TotalCompleted;
+        public double Secondary { get; set; } // optional
+    }
 
         public class BarGraphModelItem
         {

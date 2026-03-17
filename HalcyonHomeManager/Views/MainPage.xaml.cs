@@ -36,9 +36,10 @@ namespace HalcyonHomeManager.Views
             Shell.Current.GoToAsync($"HelpPage");
         }
 
+        [Obsolete]
         private void AboutButton_Clicked(object sender, EventArgs e)
         {
-            DisplayAlert("Version 1.0.4; Build 4", $"Copyright {DateTime.Now.Year} - Aaron Karr - made with love <3 \r\n\r\n GitHub URL: https://github.com/Aaronkarr11/HalcyonHomeManager", "OK");
+            DisplayAlert("Version 1.0.5; Build 5", $"Copyright {DateTime.Now.Year} - Aaron Karr - made with love <3 \r\n\r\n GitHub URL: https://github.com/Aaronkarr11/HalcyonHomeManager", "OK");
         }
     }
 }

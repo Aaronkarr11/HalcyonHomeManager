@@ -52,17 +52,20 @@ namespace HalcyonHomeManager.ViewModels
                 ExecuteNewWorkTaskCommand(sender);
             });
 
-            //EditOperationCommand = new Command((operation) =>
-            //{
-            //    ExecuteEditOperationCommand(operation);
-            //});
-
             GetSelectedProjectsCommand = new Command((name) =>
             {
-                Picker picker = (Picker)name;
-                GetWorkTaskHierarchy((Project)picker.SelectedItem);
+                if (name != null)
+                {
+                    //Picker picker = (Picker)name;
+                    //GetWorkTaskHierarchy((Project)picker.SelectedItem);
+
+                    GetWorkTaskHierarchy((Project)name);
+                }
             });
+
+
         }
+
 
         async void GetWorkTaskHierarchy(Project item)
         {
@@ -245,14 +248,14 @@ namespace HalcyonHomeManager.ViewModels
                 IsBusy = true;
                 if (_selectedProject != null)
                 {
-                    ProjectList = projList.OrderBy(p => p.ConvertedDateTimeStamp).ToList();
+                    ProjectList = projList.OrderBy(p => p.CreatedDate).ToList();
                     PickerTitle = _selectedProject.Title;
                     GetWorkTaskHierarchy(_selectedProject);
                 }
                 else
                 {
 
-                    ProjectList = projList.OrderBy(p => p.ConvertedDateTimeStamp).ToList();
+                    ProjectList = projList.OrderBy(p => p.CreatedDate).ToList();
                     if (ProjectList.Count() > 1)
                     {
                         _selectedProject = ProjectList.Where(i => i?.ConvertedDateTimeStamp != 0).LastOrDefault();
@@ -268,10 +271,12 @@ namespace HalcyonHomeManager.ViewModels
                 if (String.IsNullOrEmpty(SelectedProject))
                 {
                     SelectedProject = "Selected Project ";
+                    PickerTitle = _selectedProject?.Title;
                 }
                 else
                 {
                     SelectedProject = "Selected Project: " + _selectedProject?.Title;
+                    PickerTitle = _selectedProject?.Title;
                 }
                 ShowPicker = true;
                 IsBusy = false;
@@ -328,12 +333,28 @@ namespace HalcyonHomeManager.ViewModels
             set => SetProperty(ref _deviceButtonWidth, value);
         }
 
+
         private string _retainedSelectedProject;
         public string SelectedProject
         {
             get => _retainedSelectedProject;
             set => SetProperty(ref _retainedSelectedProject, value);
         }
+
+        private Project _selectedProjectPicker;
+        public Project SelectedProjectPicker
+        {
+            get => _selectedProjectPicker;
+            set
+            {
+                if (SetProperty(ref _selectedProjectPicker, value))
+                {
+                    GetSelectedProjectsCommand.Execute(value);
+                }
+            }
+        }
+
+
 
 
 

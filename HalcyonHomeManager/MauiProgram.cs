@@ -1,10 +1,14 @@
 ﻿using CommunityToolkit.Maui;
 using HalcyonHomeManager.BusinessLogic;
-using HalcyonHomeManager.DataLayer;
 using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.Services;
+using LiveChartsCore.SkiaSharpView.Maui;
 using Maui.FixesAndWorkarounds;
+using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Maui.Hosting;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+
+
 
 namespace HalcyonHomeManager;
 
@@ -14,7 +18,8 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
-            .UseSkiaSharp(true)
+            .UseSkiaSharp()
+            .UseLiveCharts()
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .ConfigureMauiWorkarounds()

@@ -1,9 +1,9 @@
 ﻿using HalcyonHomeManager.Entities;
 using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.Models;
-using HalcyonHomeManager.Views;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Extensions;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 
@@ -76,17 +76,17 @@ namespace HalcyonHomeManager.ViewModels
             {
                 new Axis
                 {
-                     TextSize = 35
+                     TextSize = 15
                 }
 
             };
 
                     var data = new double[] { DashBoardData.percentageData.percentUnCompleted, DashBoardData.percentageData.percentCompleted }; 
                     int counter = 1;
-                    Series = data.AsLiveChartsPieSeries((value, series) => { if (counter == 1) { series.Name = $"Uncompleted Work Tasks: {value}%"; 
+                    Series = data.AsPieSeries((value, series) => { if (counter == 1) { series.Name = $"Uncompleted Work Tasks: {value}%"; 
                     series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30)); 
                     series.Fill = new SolidColorPaint(SKColors.Yellow); series.DataLabelsSize = 0; 
-                    series.TooltipLabelFormatter = p => $"{p.PrimaryValue} / {p.StackedValue!.Total} ({p.StackedValue.Share:P2})"; } else if (counter == 2) { series.Name = $"Completed Work Tasks: {value}%"; series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30)); series.Fill = new SolidColorPaint(SKColors.Green); series.DataLabelsSize = 0; series.TooltipLabelFormatter = p => $"{p.PrimaryValue} / {p.StackedValue!.Total} ({p.StackedValue.Share:P2})"; } counter++; }).ToArray();
+                    series.ToolTipLabelFormatter = p => $"{p.AsDataLabel} / {p.StackedValue!.Total} ({p.StackedValue.Share:P2})"; } else if (counter == 2) { series.Name = $"Completed Work Tasks: {value}%"; series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30)); series.Fill = new SolidColorPaint(SKColors.Green); series.DataLabelsSize = 0; series.ToolTipLabelFormatter = p => $"{p.AsDataLabel} / {p.StackedValue!.Total} ({p.StackedValue.Share:P2})"; } counter++; }).ToArray();
 
 
                     List<string> labels = new List<string>();
@@ -99,25 +99,30 @@ namespace HalcyonHomeManager.ViewModels
                     List<LineGraphModelItem> lineGraphModels = new List<LineGraphModelItem>();
 
                     SeriesCollection = new ISeries[]
-        {
-               new LineSeries<LineGraphModelItem>
-            {
-                Values = new List<LineGraphModelItem>(lineGraphModels = DashBoardData.lineGraphModel),
-                Fill = new SolidColorPaint(SKColors.LightSkyBlue),
-                Name = $"Total Completed Work",
-                Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 6 },
-                GeometryStroke = new SolidColorPaint(SKColors.DarkBlue){ StrokeThickness = 6 },
-                TooltipLabelFormatter =
-        (chartPoint) => $"{chartPoint.Model.Name}: {chartPoint.Model.TotalCompleted}"
-            }
-                     };
+                    {
+    new LineSeries<LineGraphModelItem>
+    {
+        Values = new List<LineGraphModelItem>(lineGraphModels = DashBoardData.lineGraphModel),
+        //Mapping = (model, point) =>
+        //{
+        //    point.Coordinate = new(model.TotalCompleted, point.Context.Index);
+        //},
+        Fill = new SolidColorPaint(SKColors.LightSkyBlue),
+        Name = $"Total Completed Work",
+        
+        Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 1 },
+        GeometryStroke = new SolidColorPaint(SKColors.DarkBlue){ StrokeThickness = 1 },
+        XToolTipLabelFormatter =
+            (chartPoint) => $"{chartPoint.Model.Name}: {chartPoint.Model.TotalCompleted}"
+    }
+                    };
 
                     XAxes = new List<Axis>
                  {
                      new Axis
                      {
                          Labels = labels,
-                         TextSize = 35
+                         TextSize = 15
                      }
                  };
 
@@ -125,7 +130,7 @@ namespace HalcyonHomeManager.ViewModels
                  {
                      new Axis
                      {
-                         TextSize = 35
+                         TextSize = 15
                      }
                  };
                 }

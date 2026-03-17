@@ -24,5 +24,15 @@ namespace HalcyonHomeManager.Views
         {
             Shell.Current.GoToAsync($"HelpPage");
         }
+
+        private void MyPicker_Focused(object sender, FocusEventArgs e)
+        {
+            if (BindingContext is WorkItemManagmentViewModel vm && sender is Picker picker)
+            {
+                vm.GetSelectedProjectsCommand?.Execute(picker);
+
+            }
+        }
+
     }
 }

@@ -36,6 +36,8 @@
             <lvc:CartesianChart VerticalOptions="FillAndExpand"  HorizontalOptions="FillAndExpand" Series="{Binding BarSeries}"
                   x:Name="BarChart"
                   LegendPosition="Bottom"
+                  LegendTextSize="15"
+                               
                   XAxes="{Binding BarXAxes}"
                   YAxes="{Binding BarYAxes}">
             </lvc:CartesianChart>
@@ -48,6 +50,7 @@
             <lvc:PieChart  VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Series="{Binding Series}" 
                       x:Name="PieChart"
                       LegendPosition="Right"
+                            LegendTextSize="15"
                       TooltipPosition="Right"
                       />
         </StackLayout>
@@ -56,6 +59,7 @@
             <Label FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding LineGraphTitle}"  BackgroundColor="White"></Label>
             <lvc:CartesianChart VerticalOptions="FillAndExpand" HorizontalOptions="Fill" 
                                 Series="{Binding SeriesCollection}"
+                                 LegendTextSize="15"
                                 XAxes="{Binding XAxes}"
                                 YAxes="{Binding YAxes}"/>
         </StackLayout>
