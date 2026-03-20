@@ -15,8 +15,8 @@
 		<ApplicationIdGuid>492c924c-1bc4-4c09-9c69-24fc2d6ceb0b</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0.5</ApplicationDisplayVersion>
-		<ApplicationVersion>5</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.7</ApplicationDisplayVersion>
+		<ApplicationVersion>7</ApplicationVersion>
 
 		<!-- Platform Minimums -->
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
