@@ -15,80 +15,6 @@
         <ToolbarItem Text="Refresh" IconImageSource="ic_autorenew.png" Command="{Binding OnRefreshCommand}" />
     </ContentPage.ToolbarItems>
 
-
-    <ContentPage.Resources>
-        <ControlTemplate x:Key="CardViewControlTemplate"
-                         x:DataType="controls:CardView">
-            <Frame BindingContext="{Binding Source={RelativeSource TemplatedParent}}"
-                   BackgroundColor="{TemplateBinding CardColor}"
-                   BorderColor="{TemplateBinding BorderColor}"
-                   CornerRadius="5"
-                   HasShadow="True"
-                   Padding="10"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="55" />
-                        <RowDefinition Height="20" />
-                        <RowDefinition Height="25" />
-                        <RowDefinition Height="25" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="5" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="30" />
-
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0"
-                           Grid.ColumnSpan="3"
-                           Text="{Binding CardTitle}"
-                           FontAttributes="Bold"
-                           FontSize="Small"
-                           VerticalTextAlignment="Center"
-                           HorizontalTextAlignment="Start" />
-                    <BoxView Grid.Row="1"
-                             Grid.ColumnSpan="3"
-                             BackgroundColor="{Binding BorderColor}"
-                             HeightRequest="2"
-                             HorizontalOptions="Fill" />
-                    <Label Grid.Row="2"
-                           Grid.ColumnSpan="3"
-                           Text="{Binding CardDescription}"
-                           VerticalTextAlignment="Start"
-                           VerticalOptions="Fill"
-                           HorizontalOptions="Fill" />
-                    <Label Grid.Row="3"
-                           TextColor="DarkGreen"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="1"
-                           Text="Complete:"
-                           Margin="0,0,0,0"
-                           VerticalOptions="Center" />
-                    <CheckBox Color="Green" 
-                              Grid.Row="3" 
-                              Grid.Column="1">
-                        <CheckBox.Behaviors>
-                            <toolkit:EventToCommandBehavior
-                            EventName="CheckedChanged"
-                            Command="{Binding FullfillCommand}"
-                            CommandParameter="{Binding CommandParameter}" />
-                        </CheckBox.Behaviors>
-                    </CheckBox>
-                </Grid>
-            </Frame>
-        </ControlTemplate>
-
-        <Style TargetType="controls:CardView">
-            <Setter Property="ControlTemplate"
-                    Value="{StaticResource CardViewControlTemplate}" />
-        </Style>
-
-    </ContentPage.Resources>
-
     <StackLayout>
         <StackLayout HeightRequest="100" Padding="5,0,0,0" BackgroundColor="CornflowerBlue">
             <Label FontSize="Medium"  Margin="0,5,0,0" HorizontalOptions="CenterAndExpand" FontFamily="Bold" TextColor="White">REQUESTED ITEMS/SUPPLIES</Label>
@@ -97,21 +23,45 @@
             </Label>
         </StackLayout>
         <RefreshView Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+
             <CollectionView x:Name="RequestItemsListView" ItemsSource="{Binding RequestItems}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10" x:DataType="model:RequestItems">
-                            <controls:CardView BorderColor="DarkGray"
-                           CardTitle="{Binding Title}"
-                           CardDescription="{Binding DesiredDateDisplay}"
-                           CardColor="Azure"
-                           FullfillCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ItemRequestViewModel}}, Path=CompleteCommand}"
-                           CommandParameter="{Binding .}"
-                           ControlTemplate="{StaticResource CardViewControlTemplate}" />
+                            <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True"  BackgroundColor="Azure">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25" />
+                                        <RowDefinition Height="25" />
+                                        <RowDefinition Height="25" />
+                                        <RowDefinition Height="25" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Grid.Row="0">Item Name:</Label>
+                                    <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" FontSize="16" FontAttributes="Bold" Text="{Binding Title}"></Label>
+
+                                    <Label Grid.Column="0" Grid.Row="1">Desired Date:</Label>
+                                    <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" FontSize="16" FontAttributes="Bold" Text="{Binding DesiredDateDisplay}"></Label>
+                                    <Label Grid.Column="0" Grid.Row="3">Completed:</Label>
+                                    <CheckBox          
+                                        Color="Green"
+                                        Grid.Column="1" 
+                                        Grid.Row="3"
+                                        CheckedChanged="FireCompleteCommand"/>
+                                </Grid>
+                            </Frame>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+
         </RefreshView>
     </StackLayout>
 

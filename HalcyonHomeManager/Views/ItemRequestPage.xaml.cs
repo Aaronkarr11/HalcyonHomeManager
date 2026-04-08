@@ -1,3 +1,4 @@
+using HalcyonHomeManager.Entities;
 using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.ViewModels;
 
@@ -19,5 +20,17 @@ namespace HalcyonHomeManager.Views
             base.OnAppearing();
             _viewModel.OnAppearing();
         }
+
+
+        private void FireCompleteCommand(object sender, CheckedChangedEventArgs e)
+        {
+            if (sender is CheckBox cb &&
+                BindingContext is ItemRequestViewModel vm &&
+                cb.BindingContext is RequestItems item)
+            {
+                vm.CompleteCommand?.Execute(item);
+            }
+        }
+
     }
 }

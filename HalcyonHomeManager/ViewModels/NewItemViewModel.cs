@@ -52,6 +52,7 @@ namespace HalcyonHomeManager.ViewModels
             {
                 RequestItems requestItemRequest = new RequestItems();
                 requestItemRequest.DesiredDate = RequestedDate;
+                requestItemRequest.DesiredDateDisplay = RequestedDate.ToShortDateString();
                 requestItemRequest.Title = Name;
                 requestItemRequest.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
 
