@@ -3,9 +3,6 @@ using HalcyonHomeManager.BusinessLogic;
 using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.Services;
 using LiveChartsCore.SkiaSharpView.Maui;
-using Maui.FixesAndWorkarounds;
-using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Hosting;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
 
@@ -22,7 +19,6 @@ public static class MauiProgram
             .UseLiveCharts()
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
-            .ConfigureMauiWorkarounds()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
