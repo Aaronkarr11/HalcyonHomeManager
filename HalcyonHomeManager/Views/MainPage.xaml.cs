@@ -1,5 +1,7 @@
 ﻿using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.ViewModels;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 
@@ -9,6 +11,7 @@ namespace HalcyonHomeManager.Views
     public partial class MainPage : ContentPage
     {
         HomeViewModel _viewModel;
+        private LiveChartsCore.Painting.Paint _labelTheme;
         public MainPage()
         {
             InitializeComponent();
@@ -23,11 +26,24 @@ namespace HalcyonHomeManager.Views
 
             _viewModel.OnAppearing();
 
-            PieChart.LegendTextPaint = new SolidColorPaint(SKColors.Black);
+            var theme = Application.Current.RequestedTheme;
+            if (theme != AppTheme.Dark)
+            {
+                _labelTheme = new SolidColorPaint(new SKColor(30, 30, 30));
+            }
+            else
+            {
+                _labelTheme = new SolidColorPaint(new SKColor(255, 255, 255));
+            }
+
+
+            PieChart.LegendTextPaint = _labelTheme;
             PieChart.LegendTextSize = 14;
 
+            LineChart.LegendTextPaint = _labelTheme;
+            LineChart.LegendTextSize = 14;
 
-            BarChart.LegendTextPaint = new SolidColorPaint(SKColors.Black);
+            BarChart.LegendTextPaint = _labelTheme;
             BarChart.LegendTextSize = 14;
         }
 
@@ -40,6 +56,32 @@ namespace HalcyonHomeManager.Views
         private void AboutButton_Clicked(object sender, EventArgs e)
         {
             DisplayAlert("Version 1.0.8; Build 8", $"Copyright {DateTime.Now.Year} - Aaron Karr - made with love <3 \r\n\r\n GitHub URL: https://github.com/Aaronkarr11/HalcyonHomeManager", "OK");
+        }
+
+        private void OnBarChartLoaded(object sender, EventArgs e)
+        {
+            if (BarChart.Series is null)
+                return;
+
+            foreach (var series in BarChart.Series)
+            {
+                series.DataLabelsPaint = _labelTheme; // your white/dark paint
+                series.DataLabelsSize = 14;
+                series.ShowDataLabels = true;         // required for ColumnSeries
+            }
+        }
+
+        private void OnLineChartLoaded(object sender, EventArgs e)
+        {
+            if (LineChart.Series is null)
+                return;
+           
+            foreach (var series in LineChart.Series)
+            {
+                series.DataLabelsPaint = _labelTheme; // your white/dark paint
+                series.DataLabelsSize = 14;
+                series.ShowDataLabels = true;         // required for ColumnSeries
+            }
         }
     }
 }

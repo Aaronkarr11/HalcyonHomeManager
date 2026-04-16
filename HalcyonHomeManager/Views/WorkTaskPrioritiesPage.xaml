@@ -21,7 +21,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="10" x:DataType="model:WorkTask">
-                                <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True"  BackgroundColor="Azure">
+                                <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True"  BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />

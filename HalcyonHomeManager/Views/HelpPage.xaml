@@ -10,7 +10,7 @@
     <ContentPage.Content>
         <StackLayout>
             <ScrollView Padding="20" VerticalOptions="FillAndExpand">
-                <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True" BackgroundColor="#f7f9fe">
+                <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True" BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>

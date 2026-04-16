@@ -11,7 +11,7 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Spacing="4" Padding="15" BackgroundColor="#40568d">
-                <Label FontSize="Large" TextColor="White" Text="{Binding PageName}"></Label>
+                <Label FontSize="Large" TextColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}" Text="{Binding PageName}"></Label>
             </StackLayout>
             <ScrollView Padding="15" VerticalOptions="FillAndExpand">
                 <Frame CornerRadius="10"  Margin="5, 5, 5, 5" HasShadow="True" BackgroundColor="#ccd5f0">

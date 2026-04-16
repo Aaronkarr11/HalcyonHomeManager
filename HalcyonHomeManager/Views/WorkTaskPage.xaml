@@ -11,12 +11,12 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <StackLayout Spacing="4" Padding="15" BackgroundColor="#f7f9fe">
-                <Label FontSize="Medium" TextColor="Black" Text="{Binding Name}"></Label>
+            <StackLayout Spacing="4" Padding="15" BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}">
+                <Label FontSize="Medium"    TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}" Text="{Binding Name}"></Label>
             </StackLayout>
 
             <ScrollView Padding="20" VerticalOptions="FillAndExpand">
-                <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True" BackgroundColor="WhiteSmoke">
+                <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True" BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}">
 
                     <StackLayout BindableLayout.ItemsSource="{Binding SelectedWorkTask}" Padding="15" Orientation="Vertical" HorizontalOptions="FillAndExpand">
                         <Grid>
@@ -88,7 +88,7 @@
                                 </Picker>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Margin="15,0,0,0" Grid.Row="6" Grid.Column="0">
-                                <Button  Command="{Binding SaveCommand}" CommandParameter="{Binding .}" Text="Save"  HorizontalOptions="FillAndExpand"></Button>
+                                <Button  Command="{Binding SaveCommand}"  BackgroundColor="LightBlue" CommandParameter="{Binding .}" Text="Save"  HorizontalOptions="FillAndExpand"></Button>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Margin="15,0,10,15" Grid.Row="6" Grid.Column="1">
                                 <Button  Command="{Binding CancelCommand}" Text="Cancel" BackgroundColor="Goldenrod" HorizontalOptions="FillAndExpand"></Button>

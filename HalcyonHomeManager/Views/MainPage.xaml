@@ -28,16 +28,18 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackLayout BackgroundColor="White" Margin="0,10,0,0" Grid.Row="0">
-            <Label FontSize="Medium" TextColor="Blue" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="Work Task Dashboard"  BackgroundColor="White" ></Label>
+        <StackLayout BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}" Margin="0,10,0,0" Grid.Row="0">
+            <Label FontSize="Medium" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="Work Task Dashboard" BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#2e4e4e}"></Label>
         </StackLayout>
-        <StackLayout  BackgroundColor="White" Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
-            <Label FontSize="Medium"  FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding BarGraphTitle}"  BackgroundColor="White"></Label>
-            <lvc:CartesianChart VerticalOptions="FillAndExpand"  HorizontalOptions="FillAndExpand" Series="{Binding BarSeries}"
+        <StackLayout  BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}" Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+            <Label FontSize="Medium"  FontAttributes="Bold" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}" HorizontalTextAlignment="Center" Text="{Binding BarGraphTitle}"  BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}"></Label>
+            <lvc:CartesianChart VerticalOptions="FillAndExpand"  HorizontalOptions="FillAndExpand"
+                  Loaded="OnBarChartLoaded"
+                  Series="{Binding BarSeries}"
                   x:Name="BarChart"
                   LegendPosition="Bottom"
                   LegendTextSize="15"
-                               
+                  BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}"  
                   XAxes="{Binding BarXAxes}"
                   YAxes="{Binding BarYAxes}">
             </lvc:CartesianChart>
@@ -45,21 +47,26 @@
 
 
 
-        <StackLayout BackgroundColor="White" Grid.Row="2">
-            <Label FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding PieGraphTitle}"  BackgroundColor="White"></Label>
+        <StackLayout BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}" Grid.Row="2">
+            <Label FontSize="Medium" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}" HorizontalTextAlignment="Center" Text="{Binding PieGraphTitle}"  BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}"></Label>
             <lvc:PieChart  VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Series="{Binding Series}" 
                       x:Name="PieChart"
                       LegendPosition="Right"
                             LegendTextSize="15"
                       TooltipPosition="Right"
+                           BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}"
+                           
                       />
         </StackLayout>
-        
-        <StackLayout BackgroundColor="White" Grid.Row="3">
-            <Label FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding LineGraphTitle}"  BackgroundColor="White"></Label>
-            <lvc:CartesianChart VerticalOptions="FillAndExpand" HorizontalOptions="Fill" 
+
+        <StackLayout BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}" Grid.Row="3">
+            <Label FontSize="Medium" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}" HorizontalTextAlignment="Center" Text="{Binding LineGraphTitle}" ></Label>
+            <lvc:CartesianChart  VerticalOptions="FillAndExpand" HorizontalOptions="Fill" 
                                 Series="{Binding SeriesCollection}"
+                                   Loaded="OnLineChartLoaded"
+                                 x:Name="LineChart"
                                  LegendTextSize="15"
+                                BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}"
                                 XAxes="{Binding XAxes}"
                                 YAxes="{Binding YAxes}"/>
         </StackLayout>

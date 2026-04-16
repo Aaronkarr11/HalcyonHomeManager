@@ -37,6 +37,8 @@ namespace HalcyonHomeManager.BusinessLogic
         {
             try
             {
+                DashBoard dashBoard = new DashBoard();
+
                 WorkTaskCompletedStats percentages = new WorkTaskCompletedStats();
                 BarGraphModelItem barGraphModelItem = new BarGraphModelItem();
                 List<LineGraphModelItem> lineGraphModel = new List<LineGraphModelItem>();
@@ -48,6 +50,12 @@ namespace HalcyonHomeManager.BusinessLogic
                 {
                     workTaskResult = await workTaskResultAsync;
                 }
+
+                if (workTaskResult.Count == 0)
+                {
+                    dashBoard.NoWorkToShow = true;
+                }
+
 
                 DateTime todayOfCurrentMonth = Convert.ToDateTime(DateTime.Now.LastDayInThisMonth());
                 DateTime todayOfLastMonth = Convert.ToDateTime(DateTime.Now.AddMonths(-1).LastDayInThisMonth());
@@ -66,7 +74,7 @@ namespace HalcyonHomeManager.BusinessLogic
                 lineGraphModel = ComputeLineGraphSeries(workTaskResult);
                 barGraphModelItem = ComputeBarGraphSeries(workTaskResult);
 
-                DashBoard dashBoard = new DashBoard();
+       
                 dashBoard.lineGraphModel = lineGraphModel;
                 dashBoard.percentageData = percentages;
                 dashBoard.barGraphData = barGraphModelItem;

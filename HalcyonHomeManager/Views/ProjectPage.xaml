@@ -11,12 +11,12 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <StackLayout Spacing="4" Padding="15" BackgroundColor="GhostWhite">
-                <Label FontSize="Medium" TextColor="Black" Text="{Binding Name}"></Label>
+            <StackLayout Spacing="4" Padding="15" BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}">
+                <Label FontSize="Medium" Text="{Binding Name}"></Label>
             </StackLayout>
 
             <ScrollView Padding="20" Margin="0,5,0,0" VerticalOptions="FillAndExpand">
-                <Frame CornerRadius="10" HasShadow="True" BackgroundColor="WhiteSmoke">
+                <Frame CornerRadius="10" HasShadow="True" BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}">
 
                     <StackLayout BindableLayout.ItemsSource="{Binding SelectedProject}" Padding="15" Orientation="Vertical" HorizontalOptions="FillAndExpand">
                         <Grid>

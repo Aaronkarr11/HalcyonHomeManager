@@ -86,9 +86,9 @@
         <Grid RowDefinitions="Auto,*">
 
             <Picker x:Name="MyPicker"
-        TextColor="Black"
-        BackgroundColor="White"
-        TitleColor="White"
+        TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"
+        BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}"
+        TitleColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"
         Title="Select a Project"
         ItemsSource="{Binding ProjectList}"
         ItemDisplayBinding="{Binding Title}"
@@ -135,13 +135,16 @@
                                                            WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=DeviceButtonWidth}"
                                                            FontSize="Small"
                                                            Text="Edit Project"
+                                                           BackgroundColor="LightBlue"
+                                                           TextColor="Black"
                                                            HorizontalOptions="Start"
                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=EditProjectCommand}"
                                                            CommandParameter="{Binding .}">
                                             </Button>
                                             <Button
                                                            BackgroundColor="{StaticResource ButtonEdit}"
-                                                           Grid.Row="5" 
+                                                           Grid.Row="5"
+                                                           TextColor="White"
                                                            Grid.RowSpan="4"
                                                            HeightRequest="40"
                                                            Grid.Column="5"
@@ -163,11 +166,7 @@
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackLayout Padding="10" x:DataType="model:WorkTask">
-                                                        <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True"  BackgroundColor="Azure">
-
-
-
-
+                                                        <Frame CornerRadius="10" Margin="5, 5, 5, 5" HasShadow="True"  BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}">
 
                                                             <Grid>
                                                                 <Grid.RowDefinitions>
@@ -260,7 +259,8 @@
                             Grid.Column="2"
                             WidthRequest="150"
                             Grid.ColumnSpan="2"
-                             BackgroundColor="#023e8a"
+                             TextColor="Black"
+                             BackgroundColor="LightBlue"
                              Text="Edit Task"
                              FontSize="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=DeviceFontSize}"
                              FontAttributes="Bold"
