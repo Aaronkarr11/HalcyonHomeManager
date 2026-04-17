@@ -37,14 +37,32 @@ namespace HalcyonHomeManager.Views
             }
 
 
+
+
             PieChart.LegendTextPaint = _labelTheme;
             PieChart.LegendTextSize = 14;
 
-            LineChart.LegendTextPaint = _labelTheme;
-            LineChart.LegendTextSize = 14;
+            //LineChart.LegendTextPaint = _labelTheme;
+            //LineChart.LegendTextSize = 14;
+
 
             BarChart.LegendTextPaint = _labelTheme;
             BarChart.LegendTextSize = 14;
+
+            ApplyChartTheme();
+
+
+            if (LineChart.XAxes is not null)
+            {
+                foreach (var axis in LineChart.XAxes)
+                    axis.LabelsPaint = _labelTheme;
+            }
+
+            if (LineChart.YAxes is not null)
+            {
+                foreach (var axis in LineChart.YAxes)
+                    axis.LabelsPaint = _labelTheme;
+            }
         }
 
         private void HelpButton_Clicked(object sender, EventArgs e)
@@ -75,13 +93,54 @@ namespace HalcyonHomeManager.Views
         {
             if (LineChart.Series is null)
                 return;
-           
+
             foreach (var series in LineChart.Series)
             {
-                series.DataLabelsPaint = _labelTheme; // your white/dark paint
+                series.DataLabelsPaint = _labelTheme; 
                 series.DataLabelsSize = 14;
-                series.ShowDataLabels = true;         // required for ColumnSeries
+                series.ShowDataLabels = true; 
+            }
+
+    
+            if (LineChart.XAxes is not null)
+            {
+                foreach (var axis in LineChart.XAxes)
+                    axis.LabelsPaint = _labelTheme;
+            }
+
+            if (LineChart.YAxes is not null)
+            {
+                foreach (var axis in LineChart.YAxes)
+                    axis.LabelsPaint = _labelTheme;
+            }
+
+        }
+
+        private void ApplyChartTheme()
+        {
+            if (LineChart.Series is not null)
+            {
+                foreach (var series in LineChart.Series)
+                {
+                    series.DataLabelsPaint = _labelTheme;
+                    series.DataLabelsSize = 14;
+                    series.ShowDataLabels = true;
+                }
+            }
+
+            if (LineChart.XAxes is not null)
+            {
+                foreach (var axis in LineChart.XAxes)
+                    axis.LabelsPaint = _labelTheme;
+            }
+
+            if (LineChart.YAxes is not null)
+            {
+                foreach (var axis in LineChart.YAxes)
+                    axis.LabelsPaint = _labelTheme;
             }
         }
+
+
     }
 }

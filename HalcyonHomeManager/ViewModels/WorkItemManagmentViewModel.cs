@@ -76,6 +76,7 @@ namespace HalcyonHomeManager.ViewModels
                     if (item.ID == 0)
                     {
                         ExecuteNewProjectCommand();
+
                     }
                     else
                     {
@@ -183,7 +184,7 @@ namespace HalcyonHomeManager.ViewModels
             {
                 Project Project = new Project
                 {
-                    
+
                     StartDate = DateTime.Now,
                     TargetDate = DateTime.Now,
                     Severity = "4 - Low",

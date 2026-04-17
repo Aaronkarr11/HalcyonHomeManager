@@ -219,8 +219,8 @@ namespace HalcyonHomeManager.ViewModels
 
         private async void OnCancel()
         {
-            // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("//MainPage");
+            //await Shell.Current.GoToAsync("..");
         }
 
         private void OnDelete(object obj)

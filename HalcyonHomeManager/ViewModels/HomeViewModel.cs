@@ -124,19 +124,12 @@ namespace HalcyonHomeManager.ViewModels
     new LineSeries<LineGraphModelItem>
     {
         Values = new List<LineGraphModelItem>(lineGraphModels = DashBoardData.lineGraphModel),
-        //Mapping = (model, point) =>
-        //{
-        //    point.Coordinate = new(model.TotalCompleted, point.Context.Index);
-        //},
-        
+
+        Fill = new SolidColorPaint(SKColors.LightSkyBlue),
         Name = $"Total Completed Work",
-        DataLabelsPaint = _labelTheme,
         Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 1 },
         GeometryStroke = new SolidColorPaint(SKColors.DarkBlue){ StrokeThickness = 1 },
-        Fill = new SolidColorPaint(SKColors.LightSkyBlue),
-
-
-
+        ShowDataLabels = true,
         XToolTipLabelFormatter =
             (chartPoint) => $"{chartPoint.Model.Name}: {chartPoint.Model.TotalCompleted}"
     }
@@ -147,8 +140,7 @@ namespace HalcyonHomeManager.ViewModels
                      new Axis
                      {
                          Labels = labels,
-                         TextSize = 15,
-                         LabelsPaint = _labelTheme
+                         TextSize = 15
                      }
                  };
 
@@ -156,8 +148,7 @@ namespace HalcyonHomeManager.ViewModels
                  {
                      new Axis
                      {
-                         TextSize = 15,
-                         LabelsPaint = _labelTheme
+                         TextSize = 15
                      }
                  };
 

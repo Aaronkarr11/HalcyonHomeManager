@@ -63,7 +63,7 @@
             <Label FontSize="Medium" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}" HorizontalTextAlignment="Center" Text="{Binding LineGraphTitle}" ></Label>
             <lvc:CartesianChart  VerticalOptions="FillAndExpand" HorizontalOptions="Fill" 
                                 Series="{Binding SeriesCollection}"
-                                   Loaded="OnLineChartLoaded"
+                                 Loaded="OnLineChartLoaded"
                                  x:Name="LineChart"
                                  LegendTextSize="15"
                                 BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}"
