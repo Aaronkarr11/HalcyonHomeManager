@@ -9,8 +9,8 @@ namespace HalcyonHomeManager.ViewModels
     {
         private Project _project;
         private ITransactionManager _transactionServices;
-
-        public ProjectViewModel(ITransactionManager transactionServices, object project = null)
+        private int _projectCounter;
+        public ProjectViewModel(ITransactionManager transactionServices, int projectCounter, object project = null)
         {
             _transactionServices = transactionServices;
             CancelCommand = new Command(OnCancel);
@@ -61,6 +61,7 @@ namespace HalcyonHomeManager.ViewModels
         {
             try
             {
+                _projectCounter = project.GlobalProjectCounter;
                SelectedProject = project;
 
                 if (SelectedProject.ID == 0)
@@ -219,8 +220,17 @@ namespace HalcyonHomeManager.ViewModels
 
         private async void OnCancel()
         {
-            await Shell.Current.GoToAsync("//MainPage");
-            //await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("..");
+
+            //if (_projectCounter != 0)
+            //{
+            //    await Shell.Current.GoToAsync("//MainPage");
+            //   // await Shell.Current.GoToAsync("..");
+            //}
+            //else
+            //{
+            //    await Shell.Current.GoToAsync("//MainPage");
+            //}
         }
 
         private void OnDelete(object obj)
@@ -235,9 +245,20 @@ namespace HalcyonHomeManager.ViewModels
                         ProjectViewModel rawProjectViewModel = (ProjectViewModel)obj;
                         Project project = rawProjectViewModel.SelectedProject;
                         project.Completed = 0;
-                        project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
+                        var workTaskList = await _transactionServices.GetWorkTaskPrioritiesList();
+
+                        var wt = workTaskList.Where(w => w.ProjectReferenceID == project.ID).ToList();
+                        foreach (var item in wt)
+                        {
+                            item.Completed = 0;
+                            _transactionServices.DeleteWorkTask(item);
+                        }
+
                         _transactionServices.DeleteProject(project);
-                        await Shell.Current.GoToAsync("..");
+
+
+
+                        await Shell.Current.GoToAsync("//MainPage");
                     }
                     catch (Exception ex)
                     {
@@ -250,7 +271,7 @@ namespace HalcyonHomeManager.ViewModels
             }));
         }
 
-        private void OnComplete(object obj)
+        private async void OnComplete(object obj)
         {
 
             App._alertSvc.ShowConfirmation("Warning", "Are you sure you want to complete this project? All child items will be marked as completed as well.", (async result =>
@@ -259,12 +280,33 @@ namespace HalcyonHomeManager.ViewModels
                 {
                     try
                     {
+                    
+
                         ProjectViewModel rawProjectViewModel = (ProjectViewModel)obj;
                         Project project = rawProjectViewModel.SelectedProject;
                         project.Completed = 1;
-                        project.DeviceName = DeviceInfo.Name.RemoveSpecialCharacters();
                         _transactionServices.CreateOrUpdateProject(project);
+
+                        var workTaskList = await _transactionServices.GetWorkTaskPrioritiesList();
+
+                        var wt = workTaskList.Where(w => w.ProjectReferenceID == project.ID).ToList();
+                        foreach (var item in wt)
+                        {
+                            item.Completed = 1;
+                            _transactionServices.CreateOrUpdateWorkTask(item);
+                        }
                         await Shell.Current.GoToAsync("..");
+
+                        //if (project.GlobalProjectCounter == 1)
+                        //{
+                        //    await Shell.Current.GoToAsync("//MainPage");
+                        //}
+                        //else
+                        //{
+                        //    await Shell.Current.GoToAsync("..");
+                        //}
+
+                        // 
                     }
                     catch (Exception ex)
                     {

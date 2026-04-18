@@ -24,6 +24,7 @@ namespace HalcyonHomeManager.Entities
         public string Severity { get; set; }
         public int Priority { get; set; }
         public int Completed { get; set; }
+        public int GlobalProjectCounter { get; set; }
     }
 
     public class ProjectHierarchy

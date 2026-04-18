@@ -9,6 +9,8 @@ namespace HalcyonHomeManager.ViewModels
     {
         private ITransactionManager _transactionServices;
 
+        private int _projectCounter;
+
         private Project _selectedProject;
         public Command LoadWorkItemCommand { get; }
         public Command AddItemCommand { get; }
@@ -71,6 +73,7 @@ namespace HalcyonHomeManager.ViewModels
         {
             try
             {
+                ProjectHierarchy = new List<ProjectHierarchy>();
                 if (item != null)
                 {
                     if (item.ID == 0)
@@ -191,7 +194,8 @@ namespace HalcyonHomeManager.ViewModels
                     State = "New",
                     LocationCategory = "Whole House",
                     Priority = 1,
-                    Completed = 0
+                    Completed = 0,
+                    GlobalProjectCounter = _projectCounter
                 };
 
                 var navigationParameter = new Dictionary<string, object>
@@ -224,7 +228,8 @@ namespace HalcyonHomeManager.ViewModels
                     StartDate = prog.StartDate,
                     TargetDate = prog.TargetDate,
                     Description = prog.Description,
-                    Completed = 0
+                    Completed = 0,
+                    GlobalProjectCounter = _projectCounter
                 };
                 var navigationParameter = new Dictionary<string, object>
                     {
@@ -244,13 +249,27 @@ namespace HalcyonHomeManager.ViewModels
         {
             try
             {
+                ProjectHierarchy = new List<ProjectHierarchy>();
+                ProjectList = new List<Project>();
                 //List<Project> projList = new List<Project>();
                 List<Project> projList = await _transactionServices.GetProjectList();
+                _projectCounter = projList.Where(u => u.ID != 0).ToList().Count;
                 IsBusy = true;
+
+                //Check Project
+                if (_selectedProject != null)
+                {
+                    var check = projList.Where(u => u.ID == _selectedProject.ID).FirstOrDefault();
+                    if (check == null)
+                    {
+                        _selectedProject = null;
+                    }
+                }
+
                 if (_selectedProject != null)
                 {
                     ProjectList = projList.OrderBy(p => p.CreatedDate).ToList();
-                    PickerTitle = _selectedProject.Title;
+                    PickerTitle = _selectedProject?.Title;
                     GetWorkTaskHierarchy(_selectedProject);
                 }
                 else

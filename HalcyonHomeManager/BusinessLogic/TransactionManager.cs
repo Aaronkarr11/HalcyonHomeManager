@@ -332,7 +332,7 @@ namespace HalcyonHomeManager.BusinessLogic
                     CreatedDate = DateTime.Now.AddYears(-150)
                 };
                 projectResult.Add(emptyProject);
-                return projectResult;
+                return projectResult.Where(p => p.Completed == 0).ToList();
             }
             catch (Exception ex)
             {

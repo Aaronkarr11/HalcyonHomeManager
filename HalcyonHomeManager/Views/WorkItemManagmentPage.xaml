@@ -135,8 +135,9 @@
                                                            WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=DeviceButtonWidth}"
                                                            FontSize="Small"
                                                            Text="Edit Project"
-                                                           BackgroundColor="LightBlue"
-                                                           TextColor="Black"
+                                                           BackgroundColor="MidnightBlue"
+                                                            FontAttributes="Bold"
+                                                           TextColor="White"
                                                            HorizontalOptions="Start"
                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WorkItemManagmentViewModel}}, Path=EditProjectCommand}"
                                                            CommandParameter="{Binding .}">

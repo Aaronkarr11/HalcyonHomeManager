@@ -9,7 +9,7 @@ namespace HalcyonHomeManager.Views
         {
             InitializeComponent();
             var service = DependencyService.Get<ITransactionManager>();
-            BindingContext = new ProjectViewModel(service);
+            BindingContext = new ProjectViewModel(service, 0);
         }
     }
 }

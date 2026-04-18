@@ -130,6 +130,7 @@ namespace HalcyonHomeManager.ViewModels
         Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 1 },
         GeometryStroke = new SolidColorPaint(SKColors.DarkBlue){ StrokeThickness = 1 },
         ShowDataLabels = true,
+        DataLabelsSize = 12,
         XToolTipLabelFormatter =
             (chartPoint) => $"{chartPoint.Model.Name}: {chartPoint.Model.TotalCompleted}"
     }
@@ -140,7 +141,7 @@ namespace HalcyonHomeManager.ViewModels
                      new Axis
                      {
                          Labels = labels,
-                         TextSize = 15
+                         TextSize = 12
                      }
                  };
 
@@ -148,13 +149,9 @@ namespace HalcyonHomeManager.ViewModels
                  {
                      new Axis
                      {
-                         TextSize = 15
+                         TextSize = 12
                      }
                  };
-
-
-
-
 
             }
             catch (Exception ex)

@@ -16,10 +16,10 @@
         </Grid.ColumnDefinitions>
         <ScrollView Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" VerticalOptions="FillAndExpand">
             <StackLayout Orientation="Vertical">
-                <Button Text="Household Managment" BackgroundColor="{AppThemeBinding Light=#0091ff, Dark=#004070}" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"  Margin="1,10,0,0" Clicked="Button_Clicked"></Button>
-                <Button Text="WM Pickup Schedule" BackgroundColor="{AppThemeBinding Light=#0091ff, Dark=#004070}" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"  Margin="1,10,0,0" Clicked="WMSchedule_Clicked"></Button>
-                <Button Text="Help" BackgroundColor="{AppThemeBinding Light=#0091ff, Dark=#004070}" Margin="1,10,0,0" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}" Clicked="HelpButton_Clicked"></Button>
-                <Button Text="Error Logs"  BackgroundColor="{AppThemeBinding Light=#0091ff, Dark=#004070}" Margin="1,10,0,0" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}" Clicked="ErrorLogs_Clicked"></Button>
+                <Button Text="Household Managment" FontAttributes="Bold" BackgroundColor="{AppThemeBinding Light=#0091ff, Dark=#004070}" TextColor="White" Margin="1,10,0,0" Clicked="Button_Clicked"></Button>
+                <Button Text="WM Pickup Schedule" FontAttributes="Bold" BackgroundColor="{AppThemeBinding Light=#0091ff, Dark=#004070}" TextColor="White"  Margin="1,10,0,0" Clicked="WMSchedule_Clicked"></Button>
+                <Button Text="Help" FontAttributes="Bold" BackgroundColor="{AppThemeBinding Light=#0091ff, Dark=#004070}" Margin="1,10,0,0" TextColor="White" Clicked="HelpButton_Clicked"></Button>
+                <Button Text="Error Logs" FontAttributes="Bold"  BackgroundColor="{AppThemeBinding Light=#0091ff, Dark=#004070}" Margin="1,10,0,0" TextColor="White" Clicked="ErrorLogs_Clicked"></Button>
             </StackLayout>
         </ScrollView>
     </Grid>
