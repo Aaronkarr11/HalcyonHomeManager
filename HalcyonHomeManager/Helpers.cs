@@ -15,7 +15,7 @@ namespace HalcyonHomeManager
             }
             else
             {
-               return "Medium";
+                return "Medium";
             }
         }
 
@@ -75,14 +75,26 @@ namespace HalcyonHomeManager
 
         public static bool IsPhoneValid(HouseHoldMember houseHoldMemberViewModel)
         {
-            if (houseHoldMemberViewModel.PhoneNumber != null)
+            if (!string.IsNullOrEmpty(houseHoldMemberViewModel.PhoneNumber))
             {
-                var test = RemoveSpecialCharacters(houseHoldMemberViewModel.PhoneNumber);
-                if (test.Length == 10)
+                return Regex.IsMatch(
+                     houseHoldMemberViewModel.PhoneNumber,
+                        @"^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)\d{3}[\s.-]?\d{4}$"
+                 );
+            }
+            return true;
+        }
+
+        public static bool IsEmailValid(HouseHoldMember houseHoldMemberViewModel)
+        {
+            if (!string.IsNullOrEmpty(houseHoldMemberViewModel.Email))
+            {
+                try
                 {
-                    return true;
+                    var addr = new System.Net.Mail.MailAddress(houseHoldMemberViewModel.Email);
+                    return addr.Address == houseHoldMemberViewModel.Email;
                 }
-                else
+                catch
                 {
                     return false;
                 }

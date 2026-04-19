@@ -439,11 +439,15 @@ namespace HalcyonHomeManager.BusinessLogic
                 foreach (var month in MonthList)
                 {
                     LineGraphModelItem graphModelItem = new LineGraphModelItem();
+
+                    //Use for testing
+                    //int counter = GetRandomForMonth(month);
                     int counter = 0;
                     foreach (var task in workTaskResult.Where(o => o.Completed == 1).Where(i => (i.TimeStamp.ToString("yyyy")) == DateTime.Now.Year.ToString()).Where(p => p.TimeStamp.ToString("m").Substring(0, 3) == month))
                     {
                         counter++;
                     }
+
                     graphModelItem.TotalCompleted = counter;
                     graphModelItem.Name = month;
                     graphModel.Add(graphModelItem);
@@ -458,6 +462,30 @@ namespace HalcyonHomeManager.BusinessLogic
 
 
         }
+
+        //Only used for testing
+        private int GetRandomForMonth(string month)
+        {
+            var rng = new Random();
+
+            return month switch
+            {
+                "Jan" => rng.Next(0, 101),
+                "Feb" => rng.Next(0, 101),
+                "Mar" => rng.Next(0, 101),
+                "Apr" => rng.Next(0, 101),
+                "May" => rng.Next(0, 101),
+                "Jun" => 0,
+                "Jul" => rng.Next(0, 101),
+                "Aug" => rng.Next(0, 101),
+                "Sep" => rng.Next(0, 101),
+                "Oct" => rng.Next(0, 101),
+                "Nov" => rng.Next(0, 101),
+                "Dec" => rng.Next(0, 101),
+                _ => throw new ArgumentException("Invalid month value", nameof(month))
+            };
+        }
+
 
         public BarGraphModelItem ComputeBarGraphSeries(IList<WorkTask> workTaskResult)
         {

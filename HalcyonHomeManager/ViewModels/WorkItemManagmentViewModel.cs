@@ -58,9 +58,6 @@ namespace HalcyonHomeManager.ViewModels
             {
                 if (name != null)
                 {
-                    //Picker picker = (Picker)name;
-                    //GetWorkTaskHierarchy((Project)picker.SelectedItem);
-
                     GetWorkTaskHierarchy((Project)name);
                 }
             });

@@ -84,7 +84,7 @@
                                 <Button  Command="{Binding CancelCommand}" Text="Cancel" BackgroundColor="Goldenrod" TextColor="Black"  HorizontalOptions="FillAndExpand"></Button>
                             </StackLayout>
                             <StackLayout Grid.Row="7" Grid.Column="0" Margin="15,0,0,0" Orientation="Vertical">
-                                <Button  Command="{Binding CompleteCommand}"  IsVisible="{Binding ShowDeleteButton, Mode=TwoWay}" IsEnabled="{Binding ShowDeleteButton, Mode=TwoWay}"  CommandParameter="{Binding .}" Text="Complete" TextColor="Black" BackgroundColor="LightBlue"   HorizontalOptions="FillAndExpand"></Button>
+                                <Button  Command="{Binding CompleteCommand}"  IsVisible="{Binding ShowDeleteButton, Mode=TwoWay}" IsEnabled="{Binding ShowDeleteButton, Mode=TwoWay}"  CommandParameter="{Binding .}" Text="Complete" TextColor="Black" BackgroundColor="LightGray"   HorizontalOptions="FillAndExpand"></Button>
                             </StackLayout>
                             <StackLayout Grid.Row="7" Grid.Column="1" Margin="15,0,10,0" Orientation="Vertical">
                                 <Button  Command="{Binding DeleteCommand}" TextColor="White" IsVisible="{Binding ShowDeleteButton, Mode=TwoWay}" IsEnabled="{Binding ShowDeleteButton, Mode=TwoWay}" CommandParameter="{Binding .}" Text="Delete" BackgroundColor="DarkRed"  HorizontalOptions="FillAndExpand"></Button>

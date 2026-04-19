@@ -31,7 +31,7 @@
 
                             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Label FontAttributes="Bold" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"  HorizontalTextAlignment="Start" Text="Name" FontSize="Medium" />
-                                <Entry ClearButtonVisibility="WhileEditing" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"  MaxLength="50"  Text="{Binding SelectedHouseHoldMember.Name, Mode=TwoWay}" FontSize="Medium" />
+                                <Entry ClearButtonVisibility="WhileEditing"  TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"  MaxLength="50"  Text="{Binding SelectedHouseHoldMember.Name, Mode=TwoWay}" FontSize="Medium" />
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Label FontAttributes="Bold" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"  HorizontalTextAlignment="Start" Text="Email" FontSize="Medium" />
@@ -39,13 +39,13 @@
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Label FontAttributes="Bold" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"  HorizontalTextAlignment="Start" Text="Phone" FontSize="Medium" />
-                                <Entry Keyboard="Numeric" Text="{Binding SelectedHouseHoldMember.PhoneNumber, Mode=TwoWay}"></Entry>
+                                <Entry MaxLength="20" Text="{Binding SelectedHouseHoldMember.PhoneNumber, Mode=TwoWay}"></Entry>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Margin="5,5,5,5" Grid.Row="3" Grid.Column="0">
-                                <Button Command="{Binding SaveCommand}" BackgroundColor="LightBlue" CommandParameter="{Binding .}" Text="Save"  HorizontalOptions="FillAndExpand"></Button>
+                                <Button Command="{Binding SaveCommand}" TextColor="White"    BackgroundColor="#006600" FontAttributes="Bold" FontSize="Medium"  CommandParameter="{Binding .}" Text="Save"  HorizontalOptions="FillAndExpand"></Button>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Margin="5,5,5,5"  Grid.Row="3" Grid.Column="1">
-                                <Button Command="{Binding CancelCommand}" Text="Cancel" BackgroundColor="Goldenrod" HorizontalOptions="FillAndExpand"></Button>
+                                <Button Command="{Binding CancelCommand}" Text="Cancel" FontAttributes="Bold" FontSize="Medium"  BackgroundColor="Goldenrod" TextColor="Black" HorizontalOptions="FillAndExpand"></Button>
                             </StackLayout>
                         </Grid>
                     </StackLayout>

@@ -130,7 +130,7 @@ namespace HalcyonHomeManager.ViewModels
         private void OnDelete(object obj)
         {
 
-            App._alertSvc.ShowConfirmation("Error", "Are you sure you want to delete?", (async result =>
+            App._alertSvc.ShowConfirmation("Warning", "Are you sure you want to delete?.", (async result =>
             {
                 if (result)
                 {
@@ -138,6 +138,7 @@ namespace HalcyonHomeManager.ViewModels
                     {
                         HouseHoldMember member = (HouseHoldMember)obj;
                         _transactionServices.DeleteHouseHoldMember(member);
+                        HouseHoldList = await _transactionServices.GetHouseHoldMembers();
                     }
                     catch (Exception ex)
                     {
@@ -146,8 +147,8 @@ namespace HalcyonHomeManager.ViewModels
                         App._alertSvc.ShowAlert("Exception!", $"{ex.Message}");
                     }
                 }
-
             }));
+
         }
 
 

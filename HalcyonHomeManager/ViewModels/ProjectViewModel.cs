@@ -221,22 +221,12 @@ namespace HalcyonHomeManager.ViewModels
         private async void OnCancel()
         {
             await Shell.Current.GoToAsync("..");
-
-            //if (_projectCounter != 0)
-            //{
-            //    await Shell.Current.GoToAsync("//MainPage");
-            //   // await Shell.Current.GoToAsync("..");
-            //}
-            //else
-            //{
-            //    await Shell.Current.GoToAsync("//MainPage");
-            //}
         }
 
         private void OnDelete(object obj)
         {
 
-            App._alertSvc.ShowConfirmation("Warning", "Are you sure you want to delete?", (async result =>
+            App._alertSvc.ShowConfirmation("Warning", "Are you sure you want to delete? All child work tasks will be deleted as well.", (async result =>
             {
                 if (result)
                 {
@@ -274,7 +264,7 @@ namespace HalcyonHomeManager.ViewModels
         private async void OnComplete(object obj)
         {
 
-            App._alertSvc.ShowConfirmation("Warning", "Are you sure you want to complete this project? All child items will be marked as completed as well.", (async result =>
+            App._alertSvc.ShowConfirmation("Warning", "Are you sure you want to complete this project? All child work tasks will be marked as completed as well.", (async result =>
             {
                 if (result)
                 {

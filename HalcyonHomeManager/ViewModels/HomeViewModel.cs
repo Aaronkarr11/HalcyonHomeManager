@@ -5,7 +5,6 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Extensions;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.Themes;
 using SkiaSharp;
 
 namespace HalcyonHomeManager.ViewModels
@@ -20,21 +19,22 @@ namespace HalcyonHomeManager.ViewModels
 
             var name = "Welcome!";
             Title = name;
-           var  theme = Application.Current.RequestedTheme;
-            if (theme != AppTheme.Dark)
-            {
-                _labelTheme = new SolidColorPaint(new SKColor(30, 30, 30));
-            }
-            else
-            {
-                _labelTheme = new SolidColorPaint(new SKColor(255, 255, 255));
-            }
         }
 
         public async void OnAppearing()
         {
             try
             {
+                var theme = Application.Current.RequestedTheme;
+                if (theme != AppTheme.Dark)
+                {
+                    _labelTheme = new SolidColorPaint(new SKColor(30, 30, 30));
+                }
+                else
+                {
+                    _labelTheme = new SolidColorPaint(new SKColor(255, 255, 255));
+                }
+
                 IsBusy = true;
                 LineGraphTitle = $"Total Completed Work for {DateTime.Now.Year}";
                 PieGraphTitle = $"Completed Percentage for {DateTime.Now.Year}";
@@ -46,39 +46,57 @@ namespace HalcyonHomeManager.ViewModels
                     App._alertSvc.ShowAlert("No Data!", $"There is no work to show here. Go to the Work tab to create a 'New Project'. New 'Work Tasks' can then be managed");
                 }
 
+                //Find max value for linegraph
+                int maxNumber = 0;
+                var Values = DashBoardData.lineGraphModel;
+                foreach (var month in Values)
+                {
+                    if (maxNumber < month.TotalCompleted)
+                    {
+                        maxNumber = month.TotalCompleted;
+                    }
+                }
+                maxNumber = maxNumber + 2;
+
                 DashBoardData.percentageData.percentCompleted = DashBoardData?.percentageData?.percentCompleted.ToString() == "NaN" ? 0 : DashBoardData.percentageData.percentCompleted;
                 DashBoardData.percentageData.percentUnCompleted = DashBoardData?.percentageData?.percentUnCompleted.ToString() == "NaN" ? 100 : DashBoardData.percentageData.percentUnCompleted;
                 var graphData = new double[] { DashBoardData.percentageData.percentUnCompleted, DashBoardData.percentageData.percentCompleted };
                 BarSeries = new ISeries[]
                    {
-                      
+                       
            new ColumnSeries<int>
         {
+               
              ShowDataLabels = true,
             Name = DashBoardData.barGraphData.LastMonth,
             Values = new [] { DashBoardData.barGraphData.CompletedCountForLastMonth},
            Fill = new SolidColorPaint(SKColors.Blue),
            DataLabelsPaint = _labelTheme,
-          
-
+           DataLabelsSize = 12,
+           DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
+            DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 10),
+            
             },
             new ColumnSeries<int>
         {
+                         ShowDataLabels = true,
             Name = DashBoardData.barGraphData.CurrentMonth,
             Values = new [] { DashBoardData.barGraphData.CompletedCountForCurrentMonth },
             Fill = new SolidColorPaint(SKColors.LightBlue),
             DataLabelsPaint = _labelTheme,
-           
+            DataLabelsSize = 12,
+            DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
+             DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 10),
         }
                    };
 
                 BarXAxes = new List<Axis>
             {
-                    
+
                 new Axis
                 {
-                       TextSize = 0,
-                       
+                 LabelsPaint = null,
+                 Labels = null
                 }
 
             };
@@ -87,7 +105,9 @@ namespace HalcyonHomeManager.ViewModels
             {
                 new Axis
                 {
-                     TextSize = 15
+                     LabelsPaint = _labelTheme,
+                    TextSize = 12,
+                    MinStep = 0
                 }
 
             };
@@ -131,6 +151,9 @@ namespace HalcyonHomeManager.ViewModels
         GeometryStroke = new SolidColorPaint(SKColors.DarkBlue){ StrokeThickness = 1 },
         ShowDataLabels = true,
         DataLabelsSize = 12,
+        DataLabelsPaint = _labelTheme,
+        DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
+        DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 1),
         XToolTipLabelFormatter =
             (chartPoint) => $"{chartPoint.Model.Name}: {chartPoint.Model.TotalCompleted}"
     }
@@ -141,7 +164,8 @@ namespace HalcyonHomeManager.ViewModels
                      new Axis
                      {
                          Labels = labels,
-                         TextSize = 12
+                         TextSize = 12,
+                         MinStep = 0
                      }
                  };
 
@@ -149,6 +173,8 @@ namespace HalcyonHomeManager.ViewModels
                  {
                      new Axis
                      {
+                         MinLimit = -1,
+                         MaxLimit = maxNumber,
                          TextSize = 12
                      }
                  };

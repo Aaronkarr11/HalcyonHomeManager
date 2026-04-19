@@ -1,6 +1,5 @@
 ﻿using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.ViewModels;
-using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
@@ -36,14 +35,13 @@ namespace HalcyonHomeManager.Views
                 _labelTheme = new SolidColorPaint(new SKColor(255, 255, 255));
             }
 
-
-
-
+            BarChart.LegendTextPaint = _labelTheme;
+            BarChart.LegendTextSize = 12;
             PieChart.LegendTextPaint = _labelTheme;
-            PieChart.LegendTextSize = 14;
+            PieChart.LegendTextSize = 12;
 
             LineChart.LegendTextSize = 12;
-
+            LineChart.LegendTextPaint = _labelTheme;
             if (LineChart.Series != null)
             {
                 foreach (var series in LineChart.Series)
@@ -55,8 +53,6 @@ namespace HalcyonHomeManager.Views
             }
 
 
-            BarChart.LegendTextPaint = _labelTheme;
-            BarChart.LegendTextSize = 14;
 
             ApplyChartTheme();
 
@@ -67,14 +63,16 @@ namespace HalcyonHomeManager.Views
                     axis.LabelsPaint = _labelTheme;
             }
 
+        
             if (LineChart.YAxes is not null)
             {
+           
                 foreach (var axis in LineChart.YAxes)
                     axis.LabelsPaint = _labelTheme;
+                
             }
 
             LineChart.InvalidateMeasure();
-
         }
 
         private void HelpButton_Clicked(object sender, EventArgs e)
@@ -85,21 +83,10 @@ namespace HalcyonHomeManager.Views
         [Obsolete]
         private void AboutButton_Clicked(object sender, EventArgs e)
         {
-            DisplayAlert("Version 1.0.8; Build 8", $"Copyright {DateTime.Now.Year} - Aaron Karr - made with love <3 \r\n\r\n GitHub URL: https://github.com/Aaronkarr11/HalcyonHomeManager", "OK");
+            DisplayAlert("Version 1.0.9; Build 9", $"Copyright {DateTime.Now.Year} - Aaron Karr - made with love <3 \r\n\r\n GitHub URL: https://github.com/Aaronkarr11/HalcyonHomeManager", "OK");
         }
 
-        private void OnBarChartLoaded(object sender, EventArgs e)
-        {
-            if (BarChart.Series is null)
-                return;
 
-            foreach (var series in BarChart.Series)
-            {
-                series.DataLabelsPaint = _labelTheme; // your white/dark paint
-                series.DataLabelsSize = 14;
-                series.ShowDataLabels = true;         // required for ColumnSeries
-            }
-        }
 
         private void OnLineChartLoaded(object sender, EventArgs e)
         {
@@ -110,7 +97,8 @@ namespace HalcyonHomeManager.Views
             {
                 series.DataLabelsPaint = _labelTheme; 
                 series.DataLabelsSize = 12;
-                series.ShowDataLabels = true; 
+                series.ShowDataLabels = true;
+                series.DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 1);
             }
             LineChart.LegendTextSize = 12;
     
@@ -119,11 +107,12 @@ namespace HalcyonHomeManager.Views
                 foreach (var axis in LineChart.XAxes)
                     axis.LabelsPaint = _labelTheme;
             }
-
+        
             if (LineChart.YAxes is not null)
             {
                 foreach (var axis in LineChart.YAxes)
                     axis.LabelsPaint = _labelTheme;
+        
             }
 
         }
@@ -137,6 +126,7 @@ namespace HalcyonHomeManager.Views
                     series.DataLabelsPaint = _labelTheme;
                     series.DataLabelsSize = 12;
                     series.ShowDataLabels = true;
+                    series.DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 1);
                 }
             }
             LineChart.LegendTextSize = 12;

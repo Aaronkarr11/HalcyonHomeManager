@@ -43,6 +43,11 @@ namespace HalcyonHomeManager.ViewModels
         {
             try
             {
+                if (mem.PhoneNumber == null)
+                {
+                    mem.PhoneNumber = "";
+                }
+
                 SelectedHouseHoldMember = mem;
                 if (mem.ID == 0)
                 {
@@ -100,15 +105,26 @@ namespace HalcyonHomeManager.ViewModels
             {
                 HouseHoldMemberViewModel rawHouseHoldViewModel = (HouseHoldMemberViewModel)obj;
                 HouseHoldMember houseHold = rawHouseHoldViewModel.SelectedHouseHoldMember;
-                if (Helpers.IsPhoneValid(houseHold))
+
+                
+                if (!Helpers.IsEmailValid(houseHold))
                 {
-                    _transactionServices.CreateOrUpdateHouseHoldMember(houseHold);
-                    await Shell.Current.GoToAsync("..");
+                    App._alertSvc.ShowAlert("Warning!", "Provided email must valid");
                 }
                 else
                 {
-                    App._alertSvc.ShowAlert("Warning!", "Phone must be valid and contain 10 digits");
+                    if (!Helpers.IsPhoneValid(houseHold))
+                    {
+                        App._alertSvc.ShowAlert("Warning!", "Phone must be valid and only contain 10 digits! e.g. (000)-000-0000)");
+                    }
+                    else
+                    {
+                        _transactionServices.CreateOrUpdateHouseHoldMember(houseHold);
+                        await Shell.Current.GoToAsync("..");
+                    }
                 }
+
+
 
 
             }

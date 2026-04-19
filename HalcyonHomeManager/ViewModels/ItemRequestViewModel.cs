@@ -30,9 +30,6 @@ namespace HalcyonHomeManager.ViewModels
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             OnRefreshCommand = new Command(async () => await ExecuteLoadItemsCommand());
             AddItemCommand = new Command(OnAddItem);
-
-            //ItemTapped = new Command<RequestItemResponse>(OnItemChecked);
-
             CompleteCommand = new Command((obj) =>
             {
                 OnItemChecked(obj);
@@ -95,15 +92,6 @@ namespace HalcyonHomeManager.ViewModels
             get => _requestItems;
             set => SetProperty(ref _requestItems, value);
         }
-
-        //private string _cardTitle;
-
-        //public string CardTitle
-        //{
-        //    get { return _cardTitle; }
-        //    set { _cardTitle = value; }
-        //}
-
 
     }
 }
