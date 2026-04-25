@@ -1,5 +1,7 @@
 ﻿using HalcyonHomeManager.Interfaces;
 using HalcyonHomeManager.ViewModels;
+using LiveChartsCore.Measure;
+using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
@@ -40,39 +42,46 @@ namespace HalcyonHomeManager.Views
             PieChart.LegendTextPaint = _labelTheme;
             PieChart.LegendTextSize = 12;
 
-            LineChart.LegendTextSize = 12;
+            //LineChart.LegendTextSize = 12;
             LineChart.LegendTextPaint = _labelTheme;
             if (LineChart.Series != null)
             {
                 foreach (var series in LineChart.Series)
                 {
                     series.DataLabelsPaint = _labelTheme;
-                    series.DataLabelsSize = 12;
-                    series.ShowDataLabels = true;
+                    //series.DataLabelsSize = 12;
+                    //series.ShowDataLabels = true;
+
                 }
             }
 
 
 
-            ApplyChartTheme();
+              ApplyChartTheme();
 
 
-            if (LineChart.XAxes is not null)
-            {
-                foreach (var axis in LineChart.XAxes)
-                    axis.LabelsPaint = _labelTheme;
-            }
+            //if (LineChart.XAxes is not null)
+            //{
+            //    foreach (var axis in LineChart.XAxes)
+            //        axis.LabelsPaint = _labelTheme;
+            //}
 
-        
-            if (LineChart.YAxes is not null)
-            {
-           
-                foreach (var axis in LineChart.YAxes)
-                    axis.LabelsPaint = _labelTheme;
-                
-            }
 
-            LineChart.InvalidateMeasure();
+            //if (LineChart.YAxes is not null)
+            //{
+            //    new Axis
+            //    {
+            //        MinStep = 1,
+            //        ForceStepToMin = false
+            //    };
+
+
+            //    foreach (var axis in LineChart.YAxes)
+            //        axis.LabelsPaint = _labelTheme;
+
+            //}
+
+
         }
 
         private void HelpButton_Clicked(object sender, EventArgs e)
@@ -98,7 +107,7 @@ namespace HalcyonHomeManager.Views
                 series.DataLabelsPaint = _labelTheme; 
                 series.DataLabelsSize = 12;
                 series.ShowDataLabels = true;
-                series.DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 1);
+                series.DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 3);
             }
             LineChart.LegendTextSize = 12;
     
@@ -124,24 +133,24 @@ namespace HalcyonHomeManager.Views
                 foreach (var series in LineChart.Series)
                 {
                     series.DataLabelsPaint = _labelTheme;
-                    series.DataLabelsSize = 12;
-                    series.ShowDataLabels = true;
-                    series.DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 1);
+                  //  series.DataLabelsSize = 12;
+                   // series.ShowDataLabels = true;
+                  //  series.DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 3);
                 }
             }
-            LineChart.LegendTextSize = 12;
+         //   LineChart.LegendTextSize = 12;
 
-            if (LineChart.XAxes is not null)
-            {
-                foreach (var axis in LineChart.XAxes)
-                    axis.LabelsPaint = _labelTheme;
-            }
+            //if (LineChart.XAxes is not null)
+            //{
+            //    foreach (var axis in LineChart.XAxes)
+            //        axis.LabelsPaint = _labelTheme;
+            //}
 
-            if (LineChart.YAxes is not null)
-            {
-                foreach (var axis in LineChart.YAxes)
-                    axis.LabelsPaint = _labelTheme;
-            }
+            //if (LineChart.YAxes is not null)
+            //{
+            //    foreach (var axis in LineChart.YAxes)
+            //        axis.LabelsPaint = _labelTheme;
+            //}
         }
 
 

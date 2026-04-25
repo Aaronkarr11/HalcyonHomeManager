@@ -11,7 +11,7 @@
 
     <StackLayout>
         <StackLayout Spacing="4" Padding="15" BackgroundColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}">
-            <Label FontSize="Large" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#f8f8ff, Dark=#004070}"  Text="{Binding ErrorPageTitle}"></Label>
+            <Label FontSize="Large" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#000000, Dark=#ffffff}"   Text="{Binding ErrorPageTitle}"></Label>
         </StackLayout>
         <ScrollView Padding="15"  VerticalOptions="FillAndExpand">
             <Border Stroke="Gray" StrokeShape="RoundRectangle 10" Margin="5, 5, 5, 5" BackgroundColor="#ccd5f0">

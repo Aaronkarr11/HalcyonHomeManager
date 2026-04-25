@@ -56,7 +56,7 @@ namespace HalcyonHomeManager.ViewModels
                         maxNumber = month.TotalCompleted;
                     }
                 }
-                maxNumber = maxNumber + 2;
+                maxNumber = maxNumber + 4;
 
                 DashBoardData.percentageData.percentCompleted = DashBoardData?.percentageData?.percentCompleted.ToString() == "NaN" ? 0 : DashBoardData.percentageData.percentCompleted;
                 DashBoardData.percentageData.percentUnCompleted = DashBoardData?.percentageData?.percentUnCompleted.ToString() == "NaN" ? 100 : DashBoardData.percentageData.percentUnCompleted;
@@ -153,7 +153,7 @@ namespace HalcyonHomeManager.ViewModels
         DataLabelsSize = 12,
         DataLabelsPaint = _labelTheme,
         DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
-        DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 1),
+        DataPadding = new LiveChartsCore.Drawing.LvcPoint(0, 5),
         XToolTipLabelFormatter =
             (chartPoint) => $"{chartPoint.Model.Name}: {chartPoint.Model.TotalCompleted}"
     }
@@ -164,6 +164,7 @@ namespace HalcyonHomeManager.ViewModels
                      new Axis
                      {
                          Labels = labels,
+                         LabelsPaint = _labelTheme,
                          TextSize = 12,
                          MinStep = 0
                      }
@@ -174,6 +175,7 @@ namespace HalcyonHomeManager.ViewModels
                      new Axis
                      {
                          MinLimit = -1,
+                         LabelsPaint = _labelTheme,
                          MaxLimit = maxNumber,
                          TextSize = 12
                      }
